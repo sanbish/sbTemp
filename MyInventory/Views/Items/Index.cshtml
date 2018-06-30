@@ -1,0 +1,101 @@
+﻿@model IEnumerable<MyInventory.Data.Item_Master>
+
+@{
+    ViewBag.Title = "Manage Products";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title"><b>Product List</b></span>
+                        <ul class="nav nav-tabs justify-content-end" data-tabs="tabs">
+                            <li class="nav-item">
+                                <form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input type="text" value="" style="color:white" class="form-control" placeholder="Search..." >
+                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active show" href="/items/create" style="margin-left:20px;">
+                                    <i class="material-icons">add</i>
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">                           
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Product Name
+                                    </th>
+                                    <th>
+                                        Category
+                                    <th>
+                                        Unit
+                                    </th>
+                                    <th>
+                                        Total Stock
+                                    </th>
+                                    <th>
+                                        
+                                    </th>
+                                </tr>
+                                </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                    {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Item)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Item_Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Item_Category.Category)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UOM.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UOM.Description)
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/items/edit/@item.Item_ID">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a rel="tooltip" title="View Details" class="btn btn-primary btn-link btn-sm" href="/items/details/@item.Item_ID">
+                                            <i class="material-icons">list</i>
+                                        </a>
+                                        <a rel="tooltip" title="Delete Record" class="btn btn-danger btn-link btn-sm" href="/items/delete/@item.Item_ID">
+                                            <i class="material-icons">close</i>
+                                        </a>
+                                      
+                                    </td>
+                                </tr>
+        }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
