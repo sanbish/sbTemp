@@ -1,0 +1,125 @@
+﻿@model MyInventory.Data.PO_Header
+
+@{
+                /**/
+
+                ViewBag.Title = "Purchasing";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Edit PO</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-11">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.PO_ID)
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">PO Number</label>
+                                        @Html.EditorFor(model => model.PO_Number, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PO_Number, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Supplier</label>
+                                        @Html.EditorFor(model => model.Supplier, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Supplier, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">PO Date</label>
+                                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header card-header-warning ">
+                                                    @*<p class="card-category">PO Items</p>*@
+                                                    <h5 class="card-title">PO Items</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-11" id="details">
+                                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">PO Line</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Product</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Qty</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Unit Price</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @{Html.RenderAction("PODetails");}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="stats">
+                                                        <input type="button" class="btn btn-warning " value="Add new row" id="Add" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <ul class="nav">
+                                <li class="nav-item active">
+                                    <a class="btn btn-primary" href="/po">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

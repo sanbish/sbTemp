@@ -12,7 +12,7 @@ namespace MyInventory.Controllers
 {
     public class ItemsController : Controller
     {
-        private InvDBContext db = new InvDBContext();
+        private InvContext db = new InvContext();
 
         // GET: Items
         public ActionResult Index()
@@ -21,8 +21,8 @@ namespace MyInventory.Controllers
             return View(item_Master.ToList());
         }
 
-        // GET: Items/Details/5
-        public ActionResult Details(string id)
+        // GET: Products/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -39,8 +39,8 @@ namespace MyInventory.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
-            ViewBag.C_Code = new SelectList(db.Item_Category, "C_Code", "Category");
-            ViewBag.Unit = new SelectList(db.UOMs, "Unit", "Description");
+            ViewBag.Cat_ID = new SelectList(db.Item_Category, "Category_ID", "Cat_Name");
+            ViewBag.Unit = new SelectList(db.UOMs, "Unit_ID", "Unit");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace MyInventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Item_ID,Item,Item_Description,Unit,C_Code")] Item_Master item_Master)
+        public ActionResult Create([Bind(Include = "Item_ID,Item_Name,Description,Unit,Cat_ID,Photo")] Item_Master item_Master)
         {
             if (ModelState.IsValid)
             {
@@ -58,13 +58,13 @@ namespace MyInventory.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.C_Code = new SelectList(db.Item_Category, "C_Code", "Category", item_Master.C_Code);
-            ViewBag.Unit = new SelectList(db.UOMs, "Unit", "Description", item_Master.Unit);
+            ViewBag.Cat_ID = new SelectList(db.Item_Category, "Category_ID", "Cat_Name", item_Master.Cat_ID);
+            ViewBag.Unit = new SelectList(db.UOMs, "Unit_ID", "Unit", item_Master.Unit);
             return View(item_Master);
         }
 
-        // GET: Items/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Products/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -75,8 +75,8 @@ namespace MyInventory.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.C_Code = new SelectList(db.Item_Category, "C_Code", "Category", item_Master.C_Code);
-            ViewBag.Unit = new SelectList(db.UOMs, "Unit", "Description", item_Master.Unit);
+            ViewBag.Cat_ID = new SelectList(db.Item_Category, "Category_ID", "Cat_Name", item_Master.Cat_ID);
+            ViewBag.Unit = new SelectList(db.UOMs, "Unit_ID", "Unit", item_Master.Unit);
             return View(item_Master);
         }
 
@@ -85,7 +85,7 @@ namespace MyInventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Item_ID,Item,Item_Description,Unit,C_Code")] Item_Master item_Master)
+        public ActionResult Edit([Bind(Include = "Item_ID,Item_Name,Description,Unit,Cat_ID,Photo")] Item_Master item_Master)
         {
             if (ModelState.IsValid)
             {
@@ -93,13 +93,13 @@ namespace MyInventory.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.C_Code = new SelectList(db.Item_Category, "C_Code", "Category", item_Master.C_Code);
-            ViewBag.Unit = new SelectList(db.UOMs, "Unit", "Description", item_Master.Unit);
+            ViewBag.Cat_ID = new SelectList(db.Item_Category, "Category_ID", "Cat_Name", item_Master.Cat_ID);
+            ViewBag.Unit = new SelectList(db.UOMs, "Unit_ID", "Unit", item_Master.Unit);
             return View(item_Master);
         }
 
-        // GET: Items/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Products/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -116,7 +116,7 @@ namespace MyInventory.Controllers
         // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Item_Master item_Master = db.Item_Master.Find(id);
             db.Item_Master.Remove(item_Master);

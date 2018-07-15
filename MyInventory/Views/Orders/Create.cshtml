@@ -1,0 +1,170 @@
+﻿@model MyInventory.Data.Order_Master
+@using MyInventory.Data
+
+@{
+    ViewBag.Title = "Checkout Product Items";
+}
+
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { id = "form1" }))
+{
+    @Html.AntiForgeryToken()
+    HtmlHelper.ClientValidationEnabled = false;
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Checkout Product(s)</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-11">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Order No</label>
+                                        @Html.EditorFor(model => model.Order_No, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.OrderNo } })
+
+                                        @Html.ValidationMessageFor(model => model.Order_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">User</label>
+                                        @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = User.Identity.Name } })
+
+                                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Comments</label>
+                                        @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="bmd-label-floating">Create Date</label>
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = DateTime.Now.ToShortDateString() } })
+                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header card-header-warning ">
+                                                    <h5 class="card-title">Line Items</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-11" id="details">
+                                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Line No</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Product</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Qty</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Unit Price</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label class="bmd-label-floating">Amount</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            @*@foreach (var OrderDetails in Model.Order_Details)
+                                        {
+                                            Html.RenderPartial("OrderDetails", OrderDetails);
+                                        }*@
+                                                            @{Html.RenderAction("OrderDetails");}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="stats">
+                                                        <input type="button" class="btn btn-warning " value="Add new row" id="Add" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <ul class="nav">
+                                <li class="nav-item active">
+                                    <a class="btn btn-primary" href="/orders">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var i = 1;
+        $("#Add").click(function () {
+            $.ajax({
+                url: '/orders/orderDetails',
+                data: { i: i },
+                success: function (data) {
+                    $("#details").append(data);
+                }
+            })
+            i++;
+        })
+
+        $('#delete').click(function () {
+            var container = $(this).closest('#details.index');
+           
+        });
+
+        
+    </script>
+}

@@ -1,39 +1,97 @@
 ﻿@model IEnumerable<MyInventory.Data.Item_Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Categories";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.E_Approval)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title"><b>Category List</b></span>
+                        <ul class="nav nav-tabs justify-content-end" data-tabs="tabs">
+                            <li class="nav-item">
+                                <form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input type="text" value="" style="color:white" class="form-control" placeholder="Search...">
+                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active show" href="/Category/create" style="margin-left:20px;">
+                                    <i class="material-icons">add</i>
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Category Name
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Aprroval Needed?
+                                </th>
+                                <th>
+                                    
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.E_Approval)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.C_Code }) |
-            @Html.ActionLink("Details", "Details", new { id=item.C_Code }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.C_Code })
-        </td>
-    </tr>
-}
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cat_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Aprroval_Needed)
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/Category/edit/@item.Category_ID">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        @*<a rel="tooltip" title="View Details" class="btn btn-primary btn-link btn-sm" href="/Category/details/@item.Category_ID">
+                                            <i class="material-icons">list</i>
+                                        </a>*@
+                                        <a rel="tooltip" title="Delete Record" class="btn btn-danger btn-link btn-sm" href="/Category/delete/@item.Category_ID">
+                                            <i class="material-icons">close</i>
+                                        </a>
 
-</table>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

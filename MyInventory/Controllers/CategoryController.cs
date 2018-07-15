@@ -1,14 +1,18 @@
-﻿using MyInventory.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using MyInventory.Data;
 
 namespace MyInventory.Controllers
 {
     public class CategoryController : Controller
     {
-        private InvDBContext db = new InvDBContext();
+        private InvContext db = new InvContext();
 
         // GET: Category
         public ActionResult Index()
@@ -17,7 +21,7 @@ namespace MyInventory.Controllers
         }
 
         // GET: Category/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -42,7 +46,7 @@ namespace MyInventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "C_Code,Category,E_Approval")] Item_Category item_Category)
+        public ActionResult Create([Bind(Include = "Category_ID,Cat_Name,Description,Aprroval_Needed")] Item_Category item_Category)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +59,7 @@ namespace MyInventory.Controllers
         }
 
         // GET: Category/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -74,7 +78,7 @@ namespace MyInventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "C_Code,Category,E_Approval")] Item_Category item_Category)
+        public ActionResult Edit([Bind(Include = "Category_ID,Cat_Name,Description,Aprroval_Needed")] Item_Category item_Category)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +90,7 @@ namespace MyInventory.Controllers
         }
 
         // GET: Category/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -103,7 +107,7 @@ namespace MyInventory.Controllers
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Item_Category item_Category = db.Item_Category.Find(id);
             db.Item_Category.Remove(item_Category);

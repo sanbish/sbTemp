@@ -5,22 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InvDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Location_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
@@ -65,106 +56,148 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="15" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="15" />
+          <Property Name="LastName" Type="varchar" MaxLength="15" />
+          <Property Name="Photo" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_Category">
           <Key>
-            <PropertyRef Name="C_Code" />
+            <PropertyRef Name="Category_ID" />
           </Key>
-          <Property Name="C_Code" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="E_Approval" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cat_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Aprroval_Needed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_Master">
           <Key>
             <PropertyRef Name="Item_ID" />
           </Key>
-          <Property Name="Item_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Item" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Item Description" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Unit" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="C_Code" Type="nchar" MaxLength="10" />
+          <Property Name="Item_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Unit" Type="int" Nullable="false" />
+          <Property Name="Cat_ID" Type="int" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
-            <PropertyRef Name="Loc_Code" />
+            <PropertyRef Name="Loc_ID" />
           </Key>
-          <Property Name="Loc_Code" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Loc_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="150" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Inventory.dbo.PO_Header' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Notification_ID" />
+          </Key>
+          <Property Name="Notification_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Notification_To" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Notification" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Is_Read" Type="bit" Nullable="false" />
+          <Property Name="Notification_Type" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Order_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_Line" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="StockId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="UpdatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ApprovedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Order_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_No" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="UpdatedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="PO_Detail">
+          <Key>
+            <PropertyRef Name="POD_ID" />
+          </Key>
+          <Property Name="POD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PO_ID" Type="int" Nullable="false" />
+          <Property Name="PO_Line" Type="tinyint" Nullable="false" />
+          <Property Name="Item_ID" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Unit_Price" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="PO_Header">
           <Key>
-            <PropertyRef Name="PO" />
-            <PropertyRef Name="Supplier" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Amount" />
+            <PropertyRef Name="PO_ID" />
           </Key>
-          <Property Name="PO" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PO_Number" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Supplier" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Inventory.dbo.PO_Line' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="PO_Line">
-          <Key>
-            <PropertyRef Name="PO" />
-            <PropertyRef Name="PO_Line" />
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Qty" />
-            <PropertyRef Name="Unit_Price" />
-          </Key>
-          <Property Name="PO" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="PO_Line" Type="numeric" Precision="3" Scale="0" Nullable="false" />
-          <Property Name="Item_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Unit_Price" Type="numeric" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Inventory.dbo.Stock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Stock">
           <Key>
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Loc_Code" />
-            <PropertyRef Name="Qty" />
+            <PropertyRef Name="LineItem_ID" />
           </Key>
-          <Property Name="Item_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Loc_Code" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="LineItem_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Loc_ID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="2" />
           <Property Name="WIP_Qty" Type="numeric" Precision="18" Scale="3" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Transactions">
-          <Key>
-            <PropertyRef Name="Trn_ID" />
-            <PropertyRef Name="Trn_Type" />
-            <PropertyRef Name="Loc_Code" />
-            <PropertyRef Name="Service_ID" />
-            <PropertyRef Name="Resource_ID" />
-            <PropertyRef Name="Unit_ID" />
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Qty" />
-            <PropertyRef Name="Approver" />
-          </Key>
-          <Property Name="Trn_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Trn_Type" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Loc_Code" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Service_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Resource_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Unit_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Item_ID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Approver" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="E_Approver" Type="nchar" MaxLength="10" />
+          <Property Name="Warranty_Expiry" Type="datetime" />
+          <Property Name="Item_Expiry" Type="datetime" />
         </EntityType>
         <EntityType Name="UOM">
           <Key>
-            <PropertyRef Name="Unit" />
+            <PropertyRef Name="Unit_ID" />
           </Key>
+          <Property Name="Unit_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Unit" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwStock">
+          <Key>
+            <PropertyRef Name="ProductName" />
+            <PropertyRef Name="Item_Name" />
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="LineItem_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Qty" />
+            <PropertyRef Name="Loc_ID" />
+          </Key>
+          <Property Name="ProductName" Type="nvarchar" MaxLength="203" Nullable="false" />
+          <Property Name="Item_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="LineItem_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Loc_ID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="WIP_Qty" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Warranty_Expiry" Type="datetime" />
+          <Property Name="Item_Expiry" Type="datetime" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -227,10 +260,10 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
           <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item_Category">
-              <PropertyRef Name="C_Code" />
+              <PropertyRef Name="Category_ID" />
             </Principal>
             <Dependent Role="Item_Master">
-              <PropertyRef Name="C_Code" />
+              <PropertyRef Name="Cat_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -239,15 +272,86 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
           <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
-              <PropertyRef Name="Unit" />
+              <PropertyRef Name="Unit_ID" />
             </Principal>
             <Dependent Role="Item_Master">
               <PropertyRef Name="Unit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Details_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Order_Master">
+          <End Role="Order_Master" Type="Self.Order_Master" Multiplicity="1" />
+          <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="LineItem_ID" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="StockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PO_Detail_PO_Header">
+          <End Role="PO_Header" Type="Self.PO_Header" Multiplicity="1" />
+          <End Role="PO_Detail" Type="Self.PO_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PO_Header">
+              <PropertyRef Name="PO_ID" />
+            </Principal>
+            <Dependent Role="PO_Detail">
+              <PropertyRef Name="PO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Item_Master">
+          <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item_Master">
+              <PropertyRef Name="Item_ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stock_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Loc_ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="Loc_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InvDBStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -256,45 +360,27 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
           <EntitySet Name="Item_Category" EntityType="Self.Item_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_Master" EntityType="Self.Item_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Details" EntityType="Self.Order_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Master" EntityType="Self.Order_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PO_Detail" EntityType="Self.PO_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PO_Header" EntityType="Self.PO_Header" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UOM" EntityType="Self.UOM" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PO_Header" EntityType="Self.PO_Header" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="vwStock" EntityType="Self.vwStock" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [PO_Header].[PO] AS [PO], 
-    [PO_Header].[Supplier] AS [Supplier], 
-    [PO_Header].[Date] AS [Date], 
-    [PO_Header].[Amount] AS [Amount]
-    FROM [dbo].[PO_Header] AS [PO_Header]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PO_Line" EntityType="Self.PO_Line" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [PO_Line].[PO] AS [PO], 
-    [PO_Line].[PO_Line] AS [PO_Line], 
-    [PO_Line].[Item_ID] AS [Item_ID], 
-    [PO_Line].[Qty] AS [Qty], 
-    [PO_Line].[Unit_Price] AS [Unit_Price]
-    FROM [dbo].[PO_Line] AS [PO_Line]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Stock" EntityType="Self.Stock" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Stock].[Item_ID] AS [Item_ID], 
-    [Stock].[Loc_Code] AS [Loc_Code], 
-    [Stock].[Qty] AS [Qty], 
-    [Stock].[WIP_Qty] AS [WIP_Qty]
-    FROM [dbo].[Stock] AS [Stock]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Transactions" EntityType="Self.Transactions" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Transactions].[Trn_ID] AS [Trn_ID], 
-    [Transactions].[Trn_Type] AS [Trn_Type], 
-    [Transactions].[Loc_Code] AS [Loc_Code], 
-    [Transactions].[Service_ID] AS [Service_ID], 
-    [Transactions].[Resource_ID] AS [Resource_ID], 
-    [Transactions].[Unit_ID] AS [Unit_ID], 
-    [Transactions].[Item_ID] AS [Item_ID], 
-    [Transactions].[Qty] AS [Qty], 
-    [Transactions].[Approver] AS [Approver], 
-    [Transactions].[E_Approver] AS [E_Approver]
-    FROM [dbo].[Transactions] AS [Transactions]</DefiningQuery>
+    [vwStock].[ProductName] AS [ProductName], 
+    [vwStock].[Item_Name] AS [Item_Name], 
+    [vwStock].[Location] AS [Location], 
+    [vwStock].[LineItem_ID] AS [LineItem_ID], 
+    [vwStock].[Product_ID] AS [Product_ID], 
+    [vwStock].[Qty] AS [Qty], 
+    [vwStock].[Loc_ID] AS [Loc_ID], 
+    [vwStock].[Price] AS [Price], 
+    [vwStock].[WIP_Qty] AS [WIP_Qty], 
+    [vwStock].[Warranty_Expiry] AS [Warranty_Expiry], 
+    [vwStock].[Item_Expiry] AS [Item_Expiry]
+    FROM [dbo].[vwStock] AS [vwStock]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -320,169 +406,53 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
             <End Role="UOM" EntitySet="UOM" />
             <End Role="Item_Master" EntitySet="Item_Master" />
           </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_AspNetUsers" Association="Self.FK_Order_Details_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Order_Master" Association="Self.FK_Order_Details_Order_Master">
+            <End Role="Order_Master" EntitySet="Order_Master" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Stock" Association="Self.FK_Order_Details_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PO_Detail_PO_Header" Association="Self.FK_PO_Detail_PO_Header">
+            <End Role="PO_Header" EntitySet="PO_Header" />
+            <End Role="PO_Detail" EntitySet="PO_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Item_Master" Association="Self.FK_Stock_Item_Master">
+            <End Role="Item_Master" EntitySet="Item_Master" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Location" Association="Self.FK_Stock_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Stock" EntitySet="Stock" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InvDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Item_Category">
-          <Key>
-            <PropertyRef Name="C_Code" />
-          </Key>
-          <Property Name="C_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="E_Approval" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Item_Master" Relationship="InvDB.FK_Item_Master_Item_Category" FromRole="Item_Category" ToRole="Item_Master" />
-        </EntityType>
-        <EntityType Name="Item_Master">
-          <Key>
-            <PropertyRef Name="Item_ID" />
-          </Key>
-          <Property Name="Item_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Item" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Item_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Unit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="C_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Item_Category" Relationship="InvDB.FK_Item_Master_Item_Category" FromRole="Item_Master" ToRole="Item_Category" />
-          <NavigationProperty Name="UOM" Relationship="InvDB.FK_Item_Master_UOM" FromRole="Item_Master" ToRole="UOM" />
-        </EntityType>
-        <EntityType Name="Location">
-          <Key>
-            <PropertyRef Name="Loc_Code" />
-          </Key>
-          <Property Name="Loc_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Location1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UOM">
-          <Key>
-            <PropertyRef Name="Unit" />
-          </Key>
-          <Property Name="Unit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Item_Master" Relationship="InvDB.FK_Item_Master_UOM" FromRole="UOM" ToRole="Item_Master" />
-        </EntityType>
-        <EntityType Name="PO_Header">
-          <Key>
-            <PropertyRef Name="PO" />
-            <PropertyRef Name="Supplier" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Amount" />
-          </Key>
-          <Property Name="PO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Supplier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PO_Line">
-          <Key>
-            <PropertyRef Name="PO" />
-            <PropertyRef Name="PO_Line1" />
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Qty" />
-            <PropertyRef Name="Unit_Price" />
-          </Key>
-          <Property Name="PO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="PO_Line1" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
-          <Property Name="Item_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Unit_Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Stock">
-          <Key>
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Loc_Code" />
-            <PropertyRef Name="Qty" />
-          </Key>
-          <Property Name="Item_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Loc_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="WIP_Qty" Type="Decimal" Precision="18" Scale="3" />
-        </EntityType>
-        <EntityType Name="Transaction">
-          <Key>
-            <PropertyRef Name="Trn_ID" />
-            <PropertyRef Name="Trn_Type" />
-            <PropertyRef Name="Loc_Code" />
-            <PropertyRef Name="Service_ID" />
-            <PropertyRef Name="Resource_ID" />
-            <PropertyRef Name="Unit_ID" />
-            <PropertyRef Name="Item_ID" />
-            <PropertyRef Name="Qty" />
-            <PropertyRef Name="Approver" />
-          </Key>
-          <Property Name="Trn_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Trn_Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Loc_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Service_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Resource_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Unit_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Item_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Approver" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="E_Approver" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <EntityContainer Name="InvDBContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Item_Category" EntityType="Self.Item_Category" />
-          <EntitySet Name="Item_Master" EntityType="Self.Item_Master" />
-          <EntitySet Name="Locations" EntityType="Self.Location" />
-          <EntitySet Name="UOMs" EntityType="Self.UOM" />
-          <EntitySet Name="PO_Header" EntityType="Self.PO_Header" />
-          <EntitySet Name="PO_Line" EntityType="Self.PO_Line" />
-          <EntitySet Name="Stocks" EntityType="Self.Stock" />
-          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
-          <EntitySet Name="C__MigrationHistory" EntityType="InvDB.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="InvDB.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="InvDB.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="InvDB.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="InvDB.AspNetUser" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="InvDB.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="InvDB.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Item_Master_Item_Category" Association="InvDB.FK_Item_Master_Item_Category">
-            <End Role="Item_Category" EntitySet="Item_Category" />
-            <End Role="Item_Master" EntitySet="Item_Master" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Item_Master_UOM" Association="InvDB.FK_Item_Master_UOM">
-            <End Role="UOM" EntitySet="UOMs" />
-            <End Role="Item_Master" EntitySet="Item_Master" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="InvDB.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="InvDB.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Location_Id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="InvDB.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -490,16 +460,16 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="InvDB.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -510,79 +480,439 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="InvDB.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="InvDB.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="AspNetRoles" Relationship="InvDB.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Order_Details" Relationship="InvDB.FK_Order_Details_AspNetUsers" FromRole="AspNetUser" ToRole="Order_Details" />
+          <NavigationProperty Name="Order_Master" Relationship="InvDB.FK_CheckOut_Header_CheckOut_Header" FromRole="AspNetUser" ToRole="Order_Master" />
+        </EntityType>
+        <EntityType Name="Item_Category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cat_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Aprroval_Needed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Item_Master" Relationship="Self.FK_Item_Master_Item_Category" FromRole="Item_Category" ToRole="Item_Master" />
+        </EntityType>
+        <EntityType Name="Item_Master">
+          <Key>
+            <PropertyRef Name="Item_ID" />
+          </Key>
+          <Property Name="Item_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unit" Type="Int32" Nullable="false" />
+          <Property Name="Cat_ID" Type="Int32" />
+          <Property Name="Photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Item_Category" Relationship="Self.FK_Item_Master_Item_Category" FromRole="Item_Master" ToRole="Item_Category" />
+          <NavigationProperty Name="UOM" Relationship="Self.FK_Item_Master_UOM" FromRole="Item_Master" ToRole="UOM" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_Stock_Item_Master" FromRole="Item_Master" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Loc_ID" />
+          </Key>
+          <Property Name="Loc_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Stocks" Relationship="Self.FK_Stock_Location" FromRole="Location" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="PO_Detail">
+          <Key>
+            <PropertyRef Name="POD_ID" />
+          </Key>
+          <Property Name="POD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PO_ID" Type="Int32" Nullable="false" />
+          <Property Name="PO_Line" Type="Byte" Nullable="false" />
+          <Property Name="Item_ID" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="Unit_Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="PO_Header" Relationship="Self.FK_PO_Detail_PO_Header" FromRole="PO_Detail" ToRole="PO_Header" />
+        </EntityType>
+        <EntityType Name="PO_Header">
+          <Key>
+            <PropertyRef Name="PO_ID" />
+          </Key>
+          <Property Name="PO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PO_Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Supplier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="PO_Detail" Relationship="Self.FK_PO_Detail_PO_Header" FromRole="PO_Header" ToRole="PO_Detail" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="LineItem_ID" />
+          </Key>
+          <Property Name="LineItem_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Loc_ID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WIP_Qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Warranty_Expiry" Type="DateTime" Precision="3" />
+          <Property Name="Item_Expiry" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Item_Master" Relationship="Self.FK_Stock_Item_Master" FromRole="Stock" ToRole="Item_Master" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Stock_Location" FromRole="Stock" ToRole="Location" />
+          <NavigationProperty Name="Order_Details" Relationship="InvDB.FK_Order_Details_Stock" FromRole="Stock" ToRole="Order_Details" />
+        </EntityType>
+        <EntityType Name="UOM">
+          <Key>
+            <PropertyRef Name="Unit_ID" />
+          </Key>
+          <Property Name="Unit_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Unit" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item_Master" Relationship="Self.FK_Item_Master_UOM" FromRole="UOM" ToRole="Item_Master" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="InvDB.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserClaim">
+            <Dependent Role="AspNetUserClaims">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="InvDB.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserLogin">
+            <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Item_Master_Item_Category">
-          <End Type="InvDB.Item_Category" Role="Item_Category" Multiplicity="0..1" />
-          <End Type="InvDB.Item_Master" Role="Item_Master" Multiplicity="*" />
+          <End Role="Item_Category" Type="Self.Item_Category" Multiplicity="0..1" />
+          <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item_Category">
-              <PropertyRef Name="C_Code" />
+              <PropertyRef Name="Category_ID" />
             </Principal>
             <Dependent Role="Item_Master">
-              <PropertyRef Name="C_Code" />
+              <PropertyRef Name="Cat_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Item_Master_UOM">
-          <End Type="InvDB.UOM" Role="UOM" Multiplicity="1" />
-          <End Type="InvDB.Item_Master" Role="Item_Master" Multiplicity="*" />
+          <End Role="UOM" Type="Self.UOM" Multiplicity="1" />
+          <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UOM">
-              <PropertyRef Name="Unit" />
+              <PropertyRef Name="Unit_ID" />
             </Principal>
             <Dependent Role="Item_Master">
               <PropertyRef Name="Unit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="InvDB.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        <Association Name="FK_Stock_Item_Master">
+          <End Role="Item_Master" Type="Self.Item_Master" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item_Master">
+              <PropertyRef Name="Item_ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Stock_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Loc_ID" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="Loc_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PO_Detail_PO_Header">
+          <End Role="PO_Header" Type="Self.PO_Header" Multiplicity="1" />
+          <End Role="PO_Detail" Type="Self.PO_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PO_Header">
+              <PropertyRef Name="PO_ID" />
+            </Principal>
+            <Dependent Role="PO_Detail">
+              <PropertyRef Name="PO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="InvContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Item_Category" EntityType="Self.Item_Category" />
+          <EntitySet Name="Item_Master" EntityType="Self.Item_Master" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="PO_Detail" EntityType="Self.PO_Detail" />
+          <EntitySet Name="PO_Header" EntityType="Self.PO_Header" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="UOMs" EntityType="Self.UOM" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Master_Item_Category" Association="Self.FK_Item_Master_Item_Category">
+            <End Role="Item_Category" EntitySet="Item_Category" />
+            <End Role="Item_Master" EntitySet="Item_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Master_UOM" Association="Self.FK_Item_Master_UOM">
+            <End Role="UOM" EntitySet="UOMs" />
+            <End Role="Item_Master" EntitySet="Item_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Item_Master" Association="Self.FK_Stock_Item_Master">
+            <End Role="Item_Master" EntitySet="Item_Master" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stock_Location" Association="Self.FK_Stock_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PO_Detail_PO_Header" Association="Self.FK_PO_Detail_PO_Header">
+            <End Role="PO_Header" EntitySet="PO_Header" />
+            <End Role="PO_Detail" EntitySet="PO_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Order_Details" EntityType="InvDB.Order_Details" />
+          <EntitySet Name="Order_Master" EntityType="InvDB.Order_Master" />
+          <AssociationSet Name="FK_Order_Details_AspNetUsers" Association="InvDB.FK_Order_Details_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Order_Master" Association="InvDB.FK_Order_Details_Order_Master">
+            <End Role="Order_Master" EntitySet="Order_Master" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Stock" Association="InvDB.FK_Order_Details_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckOut_Header_CheckOut_Header" Association="InvDB.FK_CheckOut_Header_CheckOut_Header">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order_Master" EntitySet="Order_Master" />
+          </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="InvDB.Notification" />
+          <EntitySet Name="vwStocks" EntityType="InvDB.vwStock" />
+        </EntityContainer>
+        <EntityType Name="Order_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="StockId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ApprovedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="InvDB.FK_Order_Details_AspNetUsers" FromRole="Order_Details" ToRole="AspNetUser" />
+          <NavigationProperty Name="Order_Master" Relationship="InvDB.FK_Order_Details_Order_Master" FromRole="Order_Details" ToRole="Order_Master" />
+          <NavigationProperty Name="Stock" Relationship="InvDB.FK_Order_Details_Stock" FromRole="Order_Details" ToRole="Stock" />
+          <Property Name="Order_Line" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_Master">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Order_Details" Relationship="InvDB.FK_Order_Details_Order_Master" FromRole="Order_Master" ToRole="Order_Details" />
+          <Property Name="Order_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="InvDB.FK_CheckOut_Header_CheckOut_Header" FromRole="Order_Master" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_Order_Details_AspNetUsers">
+          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="InvDB.Order_Details" Role="Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Order_Master">
+          <End Type="InvDB.Order_Master" Role="Order_Master" Multiplicity="1" />
+          <End Type="InvDB.Order_Details" Role="Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Stock">
+          <End Type="InvDB.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="InvDB.Order_Details" Role="Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="LineItem_ID" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="StockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckOut_Header_CheckOut_Header">
+          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="InvDB.Order_Master" Role="Order_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Master">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Notification_ID" />
+          </Key>
+          <Property Name="Notification_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Notification_To" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Notification1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Is_Read" Type="Boolean" Nullable="false" />
+          <Property Name="Notification_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwStock">
+          <Key>
+            <PropertyRef Name="ProductName" />
+            <PropertyRef Name="Item_Name" />
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="LineItem_ID" />
+            <PropertyRef Name="Product_ID" />
+            <PropertyRef Name="Qty" />
+            <PropertyRef Name="Loc_ID" />
+          </Key>
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="203" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LineItem_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Loc_ID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WIP_Qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Warranty_Expiry" Type="DateTime" Precision="3" />
+          <Property Name="Item_Expiry" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="InvDBStoreContainer" CdmEntityContainer="InvDBContext">
+        <EntityContainerMapping StorageEntityContainer="InvDBStoreContainer" CdmEntityContainer="InvContext">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="InvDB.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Location_Id" ColumnName="Location_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="InvDB.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="InvDB.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="InvDB.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Item_Category">
             <EntityTypeMapping TypeName="InvDB.Item_Category">
               <MappingFragment StoreEntitySet="Item_Category">
-                <ScalarProperty Name="C_Code" ColumnName="C_Code" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="E_Approval" ColumnName="E_Approval" />
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+                <ScalarProperty Name="Cat_Name" ColumnName="Cat_Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Aprroval_Needed" ColumnName="Aprroval_Needed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -590,139 +920,139 @@ warning 6002: The table/view 'Inventory.dbo.Transactions' does not have a primar
             <EntityTypeMapping TypeName="InvDB.Item_Master">
               <MappingFragment StoreEntitySet="Item_Master">
                 <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="Item_Description" ColumnName="Item Description" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="C_Code" ColumnName="C_Code" />
+                <ScalarProperty Name="Cat_ID" ColumnName="Cat_ID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
             <EntityTypeMapping TypeName="InvDB.Location">
               <MappingFragment StoreEntitySet="Location">
-                <ScalarProperty Name="Loc_Code" ColumnName="Loc_Code" />
+                <ScalarProperty Name="Loc_ID" ColumnName="Loc_ID" />
                 <ScalarProperty Name="Location1" ColumnName="Location" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UOMs">
-            <EntityTypeMapping TypeName="InvDB.UOM">
-              <MappingFragment StoreEntitySet="UOM">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PO_Header">
-            <EntityTypeMapping TypeName="InvDB.PO_Header">
-              <MappingFragment StoreEntitySet="PO_Header">
-                <ScalarProperty Name="PO" ColumnName="PO" />
-                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PO_Line">
-            <EntityTypeMapping TypeName="InvDB.PO_Line">
-              <MappingFragment StoreEntitySet="PO_Line">
-                <ScalarProperty Name="PO" ColumnName="PO" />
-                <ScalarProperty Name="PO_Line1" ColumnName="PO_Line" />
+          <EntitySetMapping Name="PO_Detail">
+            <EntityTypeMapping TypeName="InvDB.PO_Detail">
+              <MappingFragment StoreEntitySet="PO_Detail">
+                <ScalarProperty Name="POD_ID" ColumnName="POD_ID" />
+                <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+                <ScalarProperty Name="PO_Line" ColumnName="PO_Line" />
                 <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="Unit_Price" ColumnName="Unit_Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PO_Header">
+            <EntityTypeMapping TypeName="InvDB.PO_Header">
+              <MappingFragment StoreEntitySet="PO_Header">
+                <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+                <ScalarProperty Name="PO_Number" ColumnName="PO_Number" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Stocks">
             <EntityTypeMapping TypeName="InvDB.Stock">
               <MappingFragment StoreEntitySet="Stock">
-                <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
-                <ScalarProperty Name="Loc_Code" ColumnName="Loc_Code" />
+                <ScalarProperty Name="LineItem_ID" ColumnName="LineItem_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Loc_ID" ColumnName="Loc_ID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="WIP_Qty" ColumnName="WIP_Qty" />
+                <ScalarProperty Name="Warranty_Expiry" ColumnName="Warranty_Expiry" />
+                <ScalarProperty Name="Item_Expiry" ColumnName="Item_Expiry" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="InvDB.Transaction">
-              <MappingFragment StoreEntitySet="Transactions">
-                <ScalarProperty Name="Trn_ID" ColumnName="Trn_ID" />
-                <ScalarProperty Name="Trn_Type" ColumnName="Trn_Type" />
-                <ScalarProperty Name="Loc_Code" ColumnName="Loc_Code" />
-                <ScalarProperty Name="Service_ID" ColumnName="Service_ID" />
-                <ScalarProperty Name="Resource_ID" ColumnName="Resource_ID" />
+          <EntitySetMapping Name="UOMs">
+            <EntityTypeMapping TypeName="InvDB.UOM">
+              <MappingFragment StoreEntitySet="UOM">
                 <ScalarProperty Name="Unit_ID" ColumnName="Unit_ID" />
-                <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="Approver" ColumnName="Approver" />
-                <ScalarProperty Name="E_Approver" ColumnName="E_Approver" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="InvDB.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="InvDB.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="InvDB.AspNetUserClaim">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="InvDB.AspNetUserLogin">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="InvDB.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="InvDB.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
+            <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Order_Details">
+            <EntityTypeMapping TypeName="InvDB.Order_Details">
+              <MappingFragment StoreEntitySet="Order_Details">
+                <ScalarProperty Name="Order_Line" ColumnName="Order_Line" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Master">
+            <EntityTypeMapping TypeName="InvDB.Order_Master">
+              <MappingFragment StoreEntitySet="Order_Master">
+                <ScalarProperty Name="Order_No" ColumnName="Order_No" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="InvDB.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Notification_Type" ColumnName="Notification_Type" />
+                <ScalarProperty Name="Is_Read" ColumnName="Is_Read" />
+                <ScalarProperty Name="Notification1" ColumnName="Notification" />
+                <ScalarProperty Name="Notification_To" ColumnName="Notification_To" />
+                <ScalarProperty Name="Notification_ID" ColumnName="Notification_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwStocks">
+            <EntityTypeMapping TypeName="InvDB.vwStock">
+              <MappingFragment StoreEntitySet="vwStock">
+                <ScalarProperty Name="Item_Expiry" ColumnName="Item_Expiry" />
+                <ScalarProperty Name="Warranty_Expiry" ColumnName="Warranty_Expiry" />
+                <ScalarProperty Name="WIP_Qty" ColumnName="WIP_Qty" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Loc_ID" ColumnName="Loc_ID" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="LineItem_ID" ColumnName="LineItem_ID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

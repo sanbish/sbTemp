@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,27 @@ namespace MyInventory.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual string FriendlyName
+        {
+            get
+            {
+                string friendlyName = string.IsNullOrWhiteSpace(FirstName + " " + LastName) ? UserName : FirstName + " " + LastName;
+                
+                return friendlyName;
+            }
+        }
+
+        public string JobTitle { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        //public string Configuration { get; set; }
+
+        public bool IsActive { get; set; }
+        public string Photo { get; set; }
+
+        
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

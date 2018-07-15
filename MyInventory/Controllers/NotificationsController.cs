@@ -10,107 +10,107 @@ using MyInventory.Data;
 
 namespace MyInventory.Controllers
 {
-    public class PurchaseController : Controller
+    public class NotificationsController : Controller
     {
-        private InvDBContext db = new InvDBContext();
+        private InvContext db = new InvContext();
 
-        // GET: Purchase
+        // GET: Notifications
         public ActionResult Index()
         {
-            return View(db.PO_Header.ToList());
+            return View(db.Notifications.ToList());
         }
 
-        // GET: Purchase/Details/5
-        public ActionResult Details(string id)
+        // GET: Notifications/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PO_Header pO_Header = db.PO_Header.Find(id);
-            if (pO_Header == null)
+            Notification notification = db.Notifications.Find(id);
+            if (notification == null)
             {
                 return HttpNotFound();
             }
-            return View(pO_Header);
+            return View(notification);
         }
 
-        // GET: Purchase/Create
+        // GET: Notifications/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Purchase/Create
+        // POST: Notifications/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PO,Supplier,Date,Amount")] PO_Header pO_Header)
+        public ActionResult Create([Bind(Include = "Notification_ID,Notification_To,Notification1,Is_Read,Notification_Type")] Notification notification)
         {
             if (ModelState.IsValid)
             {
-                db.PO_Header.Add(pO_Header);
+                db.Notifications.Add(notification);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(pO_Header);
+            return View(notification);
         }
 
-        // GET: Purchase/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Notifications/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PO_Header pO_Header = db.PO_Header.Find(id);
-            if (pO_Header == null)
+            Notification notification = db.Notifications.Find(id);
+            if (notification == null)
             {
                 return HttpNotFound();
             }
-            return View(pO_Header);
+            return View(notification);
         }
 
-        // POST: Purchase/Edit/5
+        // POST: Notifications/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PO,Supplier,Date,Amount")] PO_Header pO_Header)
+        public ActionResult Edit([Bind(Include = "Notification_ID,Notification_To,Notification1,Is_Read,Notification_Type")] Notification notification)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pO_Header).State = EntityState.Modified;
+                db.Entry(notification).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(pO_Header);
+            return View(notification);
         }
 
-        // GET: Purchase/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Notifications/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PO_Header pO_Header = db.PO_Header.Find(id);
-            if (pO_Header == null)
+            Notification notification = db.Notifications.Find(id);
+            if (notification == null)
             {
                 return HttpNotFound();
             }
-            return View(pO_Header);
+            return View(notification);
         }
 
-        // POST: Purchase/Delete/5
+        // POST: Notifications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            PO_Header pO_Header = db.PO_Header.Find(id);
-            db.PO_Header.Remove(pO_Header);
+            Notification notification = db.Notifications.Find(id);
+            db.Notifications.Remove(notification);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

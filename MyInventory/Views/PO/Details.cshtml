@@ -1,0 +1,142 @@
+﻿@model MyInventory.Data.PO_Header
+
+@{
+    ViewBag.Title = "Purchasing";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Purchase Order Details</h4>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">PO Number</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.PO_Number)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Supplier</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.Supplier)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Date Created</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.Date)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Total Amount</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                  @Model.PO_Detail.Sum(s => s.Qty * s.Unit_Price).ToString("C")
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header card-header-warning ">
+                                        <h5 class="card-title">Line Items</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="text-warning Quote">
+                                                    <tr>
+                                                        <th class="text-right">
+                                                            Line Number
+                                                        </th>
+                                                        <th>
+                                                            Product
+                                                        </th>
+                                                        <th class="text-right">
+                                                            Qty
+                                                        </th>
+                                                        <th class="text-right">
+                                                            Unit Price
+                                                        </th>
+                                                        <th class="text-right">
+                                                            Amount
+                                                        </th>
+                                                        <th>
+
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var Detail in Model.PO_Detail)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-right">
+                                                                @Detail.PO_Line
+                                                            </td>
+                                                            <td>
+                                                                @Detail.Item_ID
+                                                            </td>
+                                                            <td class="text-right">
+                                                                @Detail.Qty.ToString()
+                                                            </td>
+                                                            <td class="text-right">
+                                                                @Detail.Unit_Price.ToString("C")
+                                                            </td>
+                                                            <td class="text-right">
+                                                                @((Detail.Unit_Price * Detail.Qty).ToString("C"))
+                                                            </td>
+                                                        </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="nav">
+                                <li class="nav-item active">
+                                    <a class="btn btn-primary" href="/po">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

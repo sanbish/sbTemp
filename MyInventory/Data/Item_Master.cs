@@ -14,13 +14,22 @@ namespace MyInventory.Data
     
     public partial class Item_Master
     {
-        public string Item_ID { get; set; }
-        public string Item { get; set; }
-        public string Item_Description { get; set; }
-        public string Unit { get; set; }
-        public string C_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Item_Master()
+        {
+            this.Stocks = new HashSet<Stock>();
+        }
+    
+        public int Item_ID { get; set; }
+        public string Item_Name { get; set; }
+        public string Description { get; set; }
+        public int Unit { get; set; }
+        public Nullable<int> Cat_ID { get; set; }
+        public string Photo { get; set; }
     
         public virtual Item_Category Item_Category { get; set; }
         public virtual UOM UOM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }

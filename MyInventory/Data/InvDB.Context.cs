@@ -13,10 +13,10 @@ namespace MyInventory.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class InvDBContext : DbContext
+    public partial class InvContext : DbContext
     {
-        public InvDBContext()
-            : base("name=InvDBContext")
+        public InvContext()
+            : base("name=InvContext")
         {
         }
     
@@ -25,18 +25,20 @@ namespace MyInventory.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Item_Category> Item_Category { get; set; }
-        public virtual DbSet<Item_Master> Item_Master { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<UOM> UOMs { get; set; }
-        public virtual DbSet<PO_Header> PO_Header { get; set; }
-        public virtual DbSet<PO_Line> PO_Line { get; set; }
-        public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Item_Category> Item_Category { get; set; }
+        public virtual DbSet<Item_Master> Item_Master { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<PO_Detail> PO_Detail { get; set; }
+        public virtual DbSet<PO_Header> PO_Header { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<UOM> UOMs { get; set; }
+        public virtual DbSet<Order_Details> Order_Details { get; set; }
+        public virtual DbSet<Order_Master> Order_Master { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<vwStock> vwStocks { get; set; }
     }
 }

@@ -14,9 +14,24 @@ namespace MyInventory.Data
     
     public partial class Stock
     {
-        public string Item_ID { get; set; }
-        public string Loc_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Stock()
+        {
+            this.Order_Details = new HashSet<Order_Details>();
+        }
+    
+        public int LineItem_ID { get; set; }
+        public int Product_ID { get; set; }
         public decimal Qty { get; set; }
+        public int Loc_ID { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> WIP_Qty { get; set; }
+        public Nullable<System.DateTime> Warranty_Expiry { get; set; }
+        public Nullable<System.DateTime> Item_Expiry { get; set; }
+    
+        public virtual Item_Master Item_Master { get; set; }
+        public virtual Location Location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Details> Order_Details { get; set; }
     }
 }

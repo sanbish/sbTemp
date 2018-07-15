@@ -4,47 +4,91 @@
     ViewBag.Title = "Manage Products";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Product Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Item)
-        </dt>
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Product Details</h4>
+            </div>
+            <div class="card-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Item)
-        </dd>
+                <div class="row">
+                    <div class="col-md-8">                      
+                        @Html.HiddenFor(model => model.Item_ID)
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Product ID</label>
+                                        @Html.EditorFor(model => model.Item_ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Product Name</label>
+                                        @Html.EditorFor(model => model.Item_Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Description</label>
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Unit of Measure</label>
+                                        @Html.EditorFor(model => model.UOM.Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Category</label>
+                                        @Html.EditorFor(model => model.Item_Category.Cat_Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="nav">
+                                <li class="nav-item active">
+                                    <a class="btn btn-primary" href="/items">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </li>
+                                @*<li class="nav-item active">
+                                    <a class="btn btn-primary" href="/items">
+                                        <i class="material-icons">edit</i>
+                                        Edit
+                                    </a>
+                                </li>*@
+                            </ul>
+                        </form>
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Item_Description)
-        </dt>
+                    <div class="col-md-4">
+                        <br /><br />
+                        <div class="card card-profile">
+                            <div class="card-body">
+                                <h4 class="card-title">Product Image</h4>
+                                <img class="img" src="@Model.Photo" style="width:250px;height:auto;" />
+                                @*<a href="#pablo" class="btn btn-primary btn-round">Change Image</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Item_Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Item_Category.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Item_Category.Category)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UOM.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UOM.Description)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Item_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

@@ -1,0 +1,52 @@
+﻿@model MyInventory.Data.Order_Details
+@using HtmlHelpers.BeginCollectionItem
+
+
+@{
+    int i = ViewBag.i == null ? 0 : ViewBag.i;
+
+}
+
+@*@using (Html.BeginCollectionItem("details"))*@
+@*{*@
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            @Html.EditorFor(model => model.Order_Line, new { htmlAttributes = new { @class = "form-control", @Name = "[" + i + "].Line", @Value = i + 1 } })
+            @Html.ValidationMessageFor(model => model.Order_Line, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.DropDownList("StockId", null, htmlAttributes: new { @class = "form-control", @Name = "[" + i + "].StockId" })
+            @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @Name = "[" + i + "].Quantity" } })
+            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+
+            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control", @Name = "[" + i + "].UnitPrice" } })
+            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+            @*<button type="button" class="delete">Delete</button>*@
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @*@((Model.UnitPrice * Model.Quantity).ToString("C"))*@
+        </div>
+    </div>
+</div>
+
+@*}*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+

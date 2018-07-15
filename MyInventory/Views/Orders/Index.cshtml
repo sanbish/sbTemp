@@ -1,0 +1,102 @@
+﻿@model IEnumerable<MyInventory.Data.Order_Master>
+
+@{
+    ViewBag.Title = "Manage Orders";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title"><b>Orders List</b></span>
+                        <ul class="nav nav-tabs justify-content-end" data-tabs="tabs">
+                            <li class="nav-item">
+                                <form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input type="text" value="" style="color:white" class="form-control" placeholder="Search...">
+                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active show" href="/orders/create" style="margin-left:20px;">
+                                    <i class="material-icons">add</i>
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary Quote">
+                            <tr>
+                                <th>
+                                    Order Number
+                                </th>
+                                <th>
+                                    Created By
+                                </th>
+                                <th>
+                                    Comments
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th class="text-right">
+                                    Total Amount
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a rel="tooltip" title="View Details" href="/orders/details/@item.Id">
+                                            @item.Order_No
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Comments)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </td>
+                                    <td class="text-right">
+                                        @(item.Order_Details.Sum(s => (s.UnitPrice)* (s.Quantity)).ToString("C"))
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        @*<a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/orders/edit/@item.Id">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a rel="tooltip" title="Delete Record" class="btn btn-danger btn-link btn-sm" href="/orders/delete/@item.Id">
+                                            <i class="material-icons">close</i>
+                                        </a>*@
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

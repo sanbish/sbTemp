@@ -37,8 +37,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Product Name</label>
-                                            @Html.EditorFor(model => model.Item, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Item, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Item_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -46,8 +46,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Description</label>
-                                            @Html.EditorFor(model => model.Item_Description, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Item_Description, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -64,8 +64,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Category</label>
-                                            @Html.DropDownList("C_Code", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.C_Code, "", new { @class = "text-danger" })
+                                            @Html.DropDownList("Cat_ID", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Cat_ID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                     <li class="nav-item active">
                                         <a class="btn btn-primary" href="/items">
                                             <i class="material-icons">keyboard_backspace</i>
-                                            Back
+                                            Back to List
                                         </a>
                                     </li>
                                     <li class="nav-item active">
@@ -89,7 +89,7 @@
                             <div class="card card-profile">
                                 <div class="card-body">                                    
                                     <h4 class="card-title">Product Image</h4>
-                                    <img class="img" src="~/assets/img/products/marc.jpg" style="width:250px;height:auto;"/>
+                                    <img class="img" src="@Model.Photo" style="width:250px;height:auto;"/>
                                     <a href="#pablo" class="btn btn-primary btn-round">Change Image</a>
                                 </div>
                             </div>
@@ -101,9 +101,6 @@
 
     </div>
 }
-
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

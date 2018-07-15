@@ -12,12 +12,18 @@ namespace MyInventory.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class PO_Line
+    public partial class vwStock
     {
-        public string PO { get; set; }
-        public decimal PO_Line1 { get; set; }
-        public string Item_ID { get; set; }
+        public string ProductName { get; set; }
+        public string Item_Name { get; set; }
+        public string Location { get; set; }
+        public int LineItem_ID { get; set; }
+        public int Product_ID { get; set; }
         public decimal Qty { get; set; }
-        public decimal Unit_Price { get; set; }
+        public int Loc_ID { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<decimal> WIP_Qty { get; set; }
+        public Nullable<System.DateTime> Warranty_Expiry { get; set; }
+        public Nullable<System.DateTime> Item_Expiry { get; set; }
     }
 }

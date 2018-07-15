@@ -1,0 +1,140 @@
+﻿@model MyInventory.Data.Order_Master
+
+@{
+    ViewBag.Title = "Manage Orders";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Order Details</h4>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Order No</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.Order_No)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">User</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.UserId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Comments</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">                                    
+                                    @Html.DisplayFor(model => model.Comments)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Create Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    @Html.DisplayFor(model => model.CreatedDate)
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header card-header-warning ">
+                                                <h5 class="card-title">Line Items</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead class="text-warning Quote">
+                                                            <tr>
+                                                                <th class="text-right">
+                                                                    Line Number
+                                                                </th>
+                                                                <th>
+                                                                    Product
+                                                                </th>
+                                                                <th class="text-right">
+                                                                    Qty
+                                                                </th>
+                                                                <th class="text-right">
+                                                                    Unit Price
+                                                                </th>
+                                                                <th class="text-right">
+                                                                    Amount
+                                                                </th>
+                                                                <th>
+
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var Detail in Model.Order_Details)
+                                                            {
+                                                            <tr>
+                                                                <td class="text-right">
+                                                                    @Detail.Order_Line
+                                                                </td>
+                                                                <td>
+                                                                    @Detail.Stock.Item_Master.Item_Name - @Detail.Stock.Location.Location1
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    @Detail.Quantity.ToString()
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    @Detail.UnitPrice.ToString("C")
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    @((Detail.UnitPrice * Detail.Quantity).ToString("C"))                                                               </td>
+                                                            </tr>                                                            
+
+                                                            }
+                                                            </tbody>
+</table>
+                                                         
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                        <ul class="nav">
+                            <li class="nav-item active">
+                                <a class="btn btn-primary" href="/orders">
+                                    <i class="material-icons">keyboard_backspace</i>
+                                    Back to List
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

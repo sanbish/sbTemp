@@ -12,17 +12,12 @@ namespace MyInventory.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class Notification
     {
-        public string Trn_ID { get; set; }
-        public string Trn_Type { get; set; }
-        public string Loc_Code { get; set; }
-        public string Service_ID { get; set; }
-        public string Resource_ID { get; set; }
-        public string Unit_ID { get; set; }
-        public string Item_ID { get; set; }
-        public decimal Qty { get; set; }
-        public string Approver { get; set; }
-        public string E_Approver { get; set; }
+        public int Notification_ID { get; set; }
+        public string Notification_To { get; set; }
+        public string Notification1 { get; set; }
+        public bool Is_Read { get; set; }
+        public string Notification_Type { get; set; }
     }
 }

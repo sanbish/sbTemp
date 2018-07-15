@@ -1,0 +1,50 @@
+﻿@model MyInventory.Data.Notification
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Notification</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Notification_To)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notification_To)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notification1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notification1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Is_Read)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Is_Read)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notification_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notification_Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Notification_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

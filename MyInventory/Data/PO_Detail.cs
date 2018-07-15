@@ -12,11 +12,15 @@ namespace MyInventory.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class C__MigrationHistory
+    public partial class PO_Detail
     {
-        public string MigrationId { get; set; }
-        public string ContextKey { get; set; }
-        public byte[] Model { get; set; }
-        public string ProductVersion { get; set; }
+        public int POD_ID { get; set; }
+        public int PO_ID { get; set; }
+        public byte PO_Line { get; set; }
+        public int Item_ID { get; set; }
+        public int Qty { get; set; }
+        public decimal Unit_Price { get; set; }
+    
+        public virtual PO_Header PO_Header { get; set; }
     }
 }

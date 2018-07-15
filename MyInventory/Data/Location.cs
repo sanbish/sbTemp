@@ -14,7 +14,17 @@ namespace MyInventory.Data
     
     public partial class Location
     {
-        public string Loc_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Location()
+        {
+            this.Stocks = new HashSet<Stock>();
+        }
+    
+        public int Loc_ID { get; set; }
         public string Location1 { get; set; }
+        public string Address { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }

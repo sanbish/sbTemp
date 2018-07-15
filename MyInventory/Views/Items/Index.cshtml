@@ -36,7 +36,7 @@
             <div class="card-body">                           
                     <div class="table-responsive">
                         <table class="table">
-                            <thead class=" text-primary">
+                            <thead class=" text-primary Quote">
                                 <tr>
                                     <th>
                                         ID
@@ -45,11 +45,15 @@
                                         Product Name
                                     </th>
                                     <th>
+                                       Description
+                                    </th>
+                                    <th>
                                         Category
+                                    </th>
                                     <th>
                                         Unit
                                     </th>
-                                    <th>
+                                    <th class="text-right">
                                         Total Stock
                                     </th>
                                     <th>
@@ -63,31 +67,40 @@
                     {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Item)
+                                        @Html.DisplayFor(modelItem => item.Item_ID)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Item_Description)
+                                        <a rel="tooltip" title="View Details"  href="/items/details/@item.Item_ID">
+                                           @item.Item_Name
+                                        </a>
+                                       
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Item_Category.Category)
+                                        @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UOM.Description)
+                                        @Html.DisplayFor(modelItem => item.Item_Category.Cat_Name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UOM.Description)
+                                        @Html.DisplayFor(modelItem => item.UOM.Unit)
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}", item.Stocks.Sum(s => s.Qty))
                                     </td>
                                     <td class="td-actions text-right">
                                         <a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/items/edit/@item.Item_ID">
                                             <i class="material-icons">edit</i>
                                         </a>
-                                        <a rel="tooltip" title="View Details" class="btn btn-primary btn-link btn-sm" href="/items/details/@item.Item_ID">
-                                            <i class="material-icons">list</i>
+                                        <a rel="tooltip" title="Stock Details" class="btn btn-primary btn-link btn-sm" href="/stock/Index/@item.Item_ID">
+                                            <i class="material-icons">line_weight</i>
                                         </a>
+                                        @*<a rel="tooltip" title="View Details" class="btn btn-primary btn-link btn-sm" href="/items/details/@item.Item_ID">
+                                            <i class="material-icons">view_week</i>
+                                        </a>*@
                                         <a rel="tooltip" title="Delete Record" class="btn btn-danger btn-link btn-sm" href="/items/delete/@item.Item_ID">
                                             <i class="material-icons">close</i>
                                         </a>
-                                      
+
                                     </td>
                                 </tr>
         }

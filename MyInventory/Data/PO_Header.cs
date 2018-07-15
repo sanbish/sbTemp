@@ -14,9 +14,19 @@ namespace MyInventory.Data
     
     public partial class PO_Header
     {
-        public string PO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PO_Header()
+        {
+            this.PO_Detail = new HashSet<PO_Detail>();
+        }
+    
+        public int PO_ID { get; set; }
+        public string PO_Number { get; set; }
         public string Supplier { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Amount { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PO_Detail> PO_Detail { get; set; }
     }
 }

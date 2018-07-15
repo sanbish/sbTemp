@@ -20,9 +20,10 @@ namespace MyInventory.Data
             this.Item_Master = new HashSet<Item_Master>();
         }
     
-        public string C_Code { get; set; }
-        public string Category { get; set; }
-        public string E_Approval { get; set; }
+        public int Category_ID { get; set; }
+        public string Cat_Name { get; set; }
+        public string Description { get; set; }
+        public bool Aprroval_Needed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item_Master> Item_Master { get; set; }

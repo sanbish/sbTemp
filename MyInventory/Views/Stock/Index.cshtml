@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MyInventory.Data.Stock>
+
+@{
+    ViewBag.Title = "Manage Stocks";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title"><b>Stock as on @DateTime.Now</b></span>
+                        <ul class="nav nav-tabs justify-content-end" data-tabs="tabs">
+                            <li class="nav-item">
+                                <form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input type="text" value="" style="color:white" class="form-control" placeholder="Search...">
+                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link active show" href="/stock/create" style="margin-left:20px;">
+                                    <i class="material-icons">add</i>
+                                    Add New
+                                </a>
+                            </li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary Quote">
+                            <tr>
+                                <th>
+                                    Product Name
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th class="text-right">
+                                    Qty
+                                </th>
+                                <th class="text-right">
+                                    Price
+                                </th>
+                                <th class="text-right">
+                                    Qty in WIP
+                                </th>
+                                <th>
+                                    Warranty Expiry
+                                </th>
+                                <th>
+                                    Product Expiry
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Item_Master.Item_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Location.Location1)
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}", item.Qty)
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:C}", item.Price)
+                                    </td>
+                                    <td class="text-right">
+                                        @String.Format("{0:N0}", item.WIP_Qty)
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd/MM/yyyy}", item.Warranty_Expiry)
+
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd/MM/yyyy}", item.Item_Expiry)
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <a rel="tooltip" title="Check Out Product" class="btn btn-primary btn-link btn-sm" href="/stock/edit/@item.LineItem_ID">
+                                            <i class="material-icons">add_shopping_cart</i>
+                                        </a>
+                                        <a rel="tooltip" title="View Details" class="btn btn-primary btn-link btn-sm" href="/stock/edit/@item.LineItem_ID">
+                                            <i class="material-icons">view_week</i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav">
+        <li class="nav-item active">
+            <a class="btn btn-primary" href="/items">
+                <i class="material-icons">keyboard_backspace</i>
+                Back to Product List
+            </a>
+        </li>
+    </ul>
+</div>

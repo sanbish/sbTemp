@@ -1,0 +1,123 @@
+﻿@model MyInventory.Data.Stock
+
+@{
+    ViewBag.Title = "Manage Stocks";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Edit Stock for @Model.Item_Master.Item_Name</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.LineItem_ID)
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Product</label>
+                                            @Html.DropDownList("Product_ID", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.Product_ID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Location</label>
+                                            @Html.DropDownList("Loc_ID", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Loc_ID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Qty</label>
+                                            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Price</label>
+                                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">WIP Qty</label>
+                                            @Html.EditorFor(model => model.WIP_Qty, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.WIP_Qty, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Warranty Expiry</label>
+                                            @Html.EditorFor(model => model.Warranty_Expiry, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Warranty_Expiry, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Item Expiry</label>
+                                            @Html.EditorFor(model => model.Item_Expiry, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Item_Expiry, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="nav">
+                                    <li class="nav-item active">
+                                        <a class="btn btn-primary" href="/stock/index">
+                                            <i class="material-icons">keyboard_backspace</i>
+                                            Back to List
+                                        </a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+                            <br /><br />
+                            <div class="card card-profile">
+                                <div class="card-body">
+                                    <h4 class="card-title">Product Image</h4>
+                                    <img class="img" src="@Model.Item_Master.Photo" style="width:250px;height:auto;" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

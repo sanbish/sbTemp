@@ -1,34 +1,71 @@
 ﻿@model MyInventory.Data.Item_Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Manage Categories";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Category Details</h4>
+            </div>
+            <div class="card-body">
 
-<div>
-    <h4>Item_Category</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
+                <div class="row">
+                    <div class="col-md-8">
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.Category_ID)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Category Name</label>
+                                    @Html.EditorFor(model => model.Cat_Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.Cat_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Description</label>
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Aprroval Needed?</label>
+                                    @Html.EditorFor(model => model.Aprroval_Needed)
+                                    @Html.ValidationMessageFor(model => model.Aprroval_Needed, "", new { @class = "text-danger", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav">
+                            <li class="nav-item active">
+                                <a class="btn btn-primary" href="/category">
+                                    <i class="material-icons">keyboard_backspace</i>
+                                    Back to List
+                                </a>
+                            </li>                            
+                        </ul>
+                    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
+                    <div class="col-md-4">
+                        <br /><br />
+                        @*<div class="card card-profile">
+                                <div class="card-body">
+                                    <h4 class="card-title">Product Image</h4>
+                                    <img class="img" src="~/assets/img/products/noImage.jpg" style="width:250px;height:auto;" />
+                                    <a href="#pablo" class="btn btn-primary btn-round">Change Image</a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.E_Approval)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.E_Approval)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.C_Code }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -1,0 +1,44 @@
+﻿@model MyInventory.Data.PO_Detail
+
+@{
+    int i = ViewBag.i == null ? 0 : ViewBag.i;
+}
+
+        
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                       
+                                        @Html.EditorFor(model => model.PO_Line, new { htmlAttributes = new { @class = "form-control", @Value = i+1, @Name = "[" + i + "].PO_Line" } })
+                                        @Html.ValidationMessageFor(model => model.PO_Line, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        @Html.DropDownList("Item_ID", null, htmlAttributes: new { @class = "form-control", @Name = "[" + i + "].Item_Id" })
+                                        @Html.ValidationMessageFor(model => model.Item_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        
+                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control", @Name = "[" + i + "].Qty" } })
+                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        
+                                        @Html.EditorFor(model => model.Unit_Price, new { htmlAttributes = new { @class = "form-control", @Name = "[" + i + "].Unit_Price" } })
+                                        @Html.ValidationMessageFor(model => model.Unit_Price, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+     
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

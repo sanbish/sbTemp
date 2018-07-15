@@ -20,6 +20,7 @@ namespace MyInventory.Data
             this.Item_Master = new HashSet<Item_Master>();
         }
     
+        public int Unit_ID { get; set; }
         public string Unit { get; set; }
         public string Description { get; set; }
     

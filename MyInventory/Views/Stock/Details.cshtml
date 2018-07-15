@@ -1,0 +1,74 @@
+﻿@model MyInventory.Data.Stock
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Stock</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WIP_Qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WIP_Qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warranty_Expiry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warranty_Expiry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Expiry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Expiry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item_Master.Item_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item_Master.Item_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.Location1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Location1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LineItem_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
