@@ -20,6 +20,16 @@ namespace MyInventory.Controllers
             return View(db.Notifications.ToList());
         }
 
+        public ActionResult _Index()
+        {
+            return PartialView(db.Notifications.ToList());
+        }
+
+        public ActionResult _Notifications()
+        {
+            return PartialView(db.Notifications.ToList());
+        }
+
         // GET: Notifications/Details/5
         public ActionResult Details(int? id)
         {
@@ -32,6 +42,10 @@ namespace MyInventory.Controllers
             {
                 return HttpNotFound();
             }
+            notification.Is_Read = true;
+            db.Entry(notification).State = EntityState.Modified;
+            db.SaveChanges();
+
             return View(notification);
         }
 

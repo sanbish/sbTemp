@@ -48,6 +48,32 @@ namespace MyInventory.Controllers
             return PartialView();
         }
 
+
+        public ActionResult Receive(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PO_Header pO_Header = db.PO_Header.Find(id);
+            if (pO_Header == null)
+            {
+                return HttpNotFound();
+            }
+
+            foreach (var detail in pO_Header.PO_Detail)
+            {
+                Stock stock = db.Stocks.Find(detail.Item_ID);
+                if (stock != null)
+                {
+                    stock.Qty = stock.Qty + detail.Qty;
+                    db.Entry(stock).State = EntityState.Modified;
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index","Stocks");
+        }
+
         // POST: PO/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

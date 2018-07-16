@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MyInventory.Data.Notification>
+
+
+<a class="nav-link" href="/Notifications" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="material-icons">notifications</i>
+    <span class="notification">@Model.Count()</span>
+</a>
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+    @foreach (var item in Model)
+    {
+        <a class="dropdown-item" href="/Notifications/Details/@item.Notification_ID">@item.Notification1</a>
+    }
+</div>

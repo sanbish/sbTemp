@@ -1,51 +1,73 @@
 ﻿@model IEnumerable<MyInventory.Data.Notification>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notifications";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Notification_To)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Notification1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Is_Read)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Notification_Type)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title"><b>Notifications for @User.Identity.Name</b></span>                        
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Notification For
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Read?
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Notification_To)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Notification1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Is_Read)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Notification_Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Notification_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Notification_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Notification_ID })
-        </td>
-    </tr>
-}
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Notification_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Notification_To)
+                                </td>
+                                <td>
+                                    <a rel="tooltip" title="View Details" href="/Notifications/details/@item.Notification_ID">
+                                        @item.Notification1
+                                    </a>
+                                   
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Notification_Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Is_Read)
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-</table>
+

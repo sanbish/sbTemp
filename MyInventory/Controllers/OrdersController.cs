@@ -109,6 +109,16 @@ namespace MyInventory.Controllers
                     detail.Order_Line = OrderLine;
                     detail.CreatedBy = UserId;
                     detail.CreatedDate= DateTime.Now;
+                    Stock stock = db.Stocks.Find(detail.StockId);
+                    if(stock!=null)
+                    {
+                        stock.Qty = stock.Qty - detail.Quantity;
+                        if (stock.Qty<0)
+                        {
+                            stock.Qty = 0;
+                        }
+                        db.Entry(stock).State = EntityState.Modified;
+                    }
                     OrderLine++;
                 }
                 db.Order_Details.AddRange(order_Details);
@@ -116,7 +126,7 @@ namespace MyInventory.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", order_Master.UserId);
+           
             return View(order_Master);
         }
 

@@ -1,50 +1,65 @@
 ﻿@model MyInventory.Data.Notification
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Notifications";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Notification Details</h4>
+            </div>
+            <div class="card-body">
 
-<div>
-    <h4>Notification</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Notification_To)
-        </dt>
+                <div class="row">
+                    <div class="col-md-8">
+                        @Html.HiddenFor(model => model.Notification_ID)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Notificatio For</label>
+                                    @Html.EditorFor(model => model.Notification_To, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Notification</label>
+                                    @Html.EditorFor(model => model.Notification1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Type</label>
+                                    @Html.EditorFor(model => model.Notification_Type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
 
-        <dd>
-            @Html.DisplayFor(model => model.Notification_To)
-        </dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Read?</label>
+                                    @Html.DisplayFor(model => model.Is_Read)
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav">
+                            <li class="nav-item active">
+                                <a class="btn btn-primary" href="/Notifications">
+                                    <i class="material-icons">keyboard_backspace</i>
+                                    Back to List
+                                </a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notification1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Notification1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Is_Read)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Is_Read)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Notification_Type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Notification_Type)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Notification_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
