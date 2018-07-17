@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3466b6638e214005bcccff7a7b610b4b" Name="Diagram1">
-        <EntityTypeShape EntityType="InvDB.AspNetRole" Width="1.5" PointX="4.375" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="InvDB.AspNetUserClaim" Width="1.5" PointX="4.5" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="InvDB.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InvDB.AspNetUser" Width="1.875" PointX="7" PointY="8.25" IsExpanded="true" />
@@ -23,7 +22,6 @@
         <AssociationConnector Association="InvDB.FK_Stock_Item_Master" ManuallyRouted="false" />
         <AssociationConnector Association="InvDB.FK_Stock_Location" ManuallyRouted="false" />
         <AssociationConnector Association="InvDB.FK_PO_Detail_PO_Header" ManuallyRouted="false" />
-        <AssociationConnector Association="InvDB.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="InvDB.Order_Details" Width="1.5" PointX="7.25" PointY="3.75" />
         <EntityTypeShape EntityType="InvDB.Order_Master" Width="1.5" PointX="5" PointY="4.125" />
         <AssociationConnector Association="InvDB.FK_Order_Details_AspNetUsers" />
@@ -32,6 +30,8 @@
         <AssociationConnector Association="InvDB.FK_CheckOut_Header_CheckOut_Header" />
         <EntityTypeShape EntityType="InvDB.Notification" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="InvDB.vwStock" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="InvDB.AspNetRole" Width="1.5" PointX="4.75" PointY="13.25" />
+        <AssociationConnector Association="InvDB.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

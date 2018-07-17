@@ -1,9 +1,7 @@
-﻿using System;
-using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MyInventory.Models
 {
@@ -40,7 +38,15 @@ namespace MyInventory.Models
         
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    
+    public class ApplicationRole : IdentityRole
+    {
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string name) : base(name) { }
+        public string Description { get; set; }
+        
+    }
+        public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

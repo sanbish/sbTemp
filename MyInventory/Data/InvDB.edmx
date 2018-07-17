@@ -11,7 +11,6 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Location_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
@@ -62,6 +61,7 @@
           <Property Name="LastName" Type="varchar" MaxLength="15" />
           <Property Name="Photo" Type="varchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
         </EntityType>
         <EntityType Name="Item_Category">
           <Key>
@@ -435,15 +435,6 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InvDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AspNetRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-          <Property Name="Location_Id" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
@@ -483,7 +474,6 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="MiddleName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -492,6 +482,8 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Order_Details" Relationship="InvDB.FK_Order_Details_AspNetUsers" FromRole="AspNetUser" ToRole="Order_Details" />
           <NavigationProperty Name="Order_Master" Relationship="InvDB.FK_CheckOut_Header_CheckOut_Header" FromRole="AspNetUser" ToRole="Order_Master" />
+          <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="AspNetRoles" Relationship="InvDB.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="Item_Category">
           <Key>
@@ -662,12 +654,7 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="InvContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
@@ -706,10 +693,6 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
             <End Role="PO_Header" EntitySet="PO_Header" />
             <End Role="PO_Detail" EntitySet="PO_Detail" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
           <EntitySet Name="Order_Details" EntityType="InvDB.Order_Details" />
           <EntitySet Name="Order_Master" EntityType="InvDB.Order_Master" />
           <AssociationSet Name="FK_Order_Details_AspNetUsers" Association="InvDB.FK_Order_Details_AspNetUsers">
@@ -730,6 +713,11 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
           </AssociationSet>
           <EntitySet Name="Notifications" EntityType="InvDB.Notification" />
           <EntitySet Name="vwStocks" EntityType="InvDB.vwStock" />
+          <EntitySet Name="AspNetRoles" EntityType="InvDB.AspNetRole" />
+          <AssociationSet Name="AspNetUserRoles" Association="InvDB.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Order_Details">
           <Key>
@@ -848,21 +836,24 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
           <Property Name="Warranty_Expiry" Type="DateTime" Precision="3" />
           <Property Name="Item_Expiry" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="InvDB.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="AspNetUserRoles">
+          <End Type="InvDB.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="InvDB.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InvDBStoreContainer" CdmEntityContainer="InvContext">
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="InvDB.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Location_Id" ColumnName="Location_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="InvDB.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
@@ -885,6 +876,7 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="InvDB.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -983,14 +975,6 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="InvDB.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Order_Details">
             <EntityTypeMapping TypeName="InvDB.Order_Details">
               <MappingFragment StoreEntitySet="Order_Details">
@@ -1053,6 +1037,22 @@ warning 6002: The table/view 'Inventory.dbo.vwStock' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="InvDB.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="InvDB.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

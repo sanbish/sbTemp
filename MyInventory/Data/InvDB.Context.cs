@@ -25,7 +25,6 @@ namespace MyInventory.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
@@ -40,5 +39,6 @@ namespace MyInventory.Data
         public virtual DbSet<Order_Master> Order_Master { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<vwStock> vwStocks { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
     }
 }

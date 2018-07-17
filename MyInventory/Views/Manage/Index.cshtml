@@ -1,108 +1,74 @@
-﻿@model IEnumerable<MyInventory.Models.ApplicationUser>
+﻿@model IdentitySample.Models.IndexViewModel
 @{
-                ViewBag.Title = "Manage Users";
+    ViewBag.Title = "Manage your account";
 }
-
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-tabs card-header-primary">
-                <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                        <span class="nav-tabs-title"><b>Users List</b></span>
-                        <ul class="nav nav-tabs justify-content-end" data-tabs="tabs">
-                            <li class="nav-item">
-                                <form class="navbar-form">
-                                    <div class="input-group no-border">
-                                        <input type="text" value="" style="color:white" class="form-control" placeholder="Search...">
-                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                            <i class="material-icons">search</i>
-                                            <div class="ripple-container"></div>
-                                        </button>
-                                    </div>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active show" href="/account/register" style="margin-left:20px;">
-                                    <i class="material-icons">add</i>
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary Quote">
-                            <tr>
-                                <th>
-                                    User Name
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Full Name
-                                </th>
-                                <th>
-                                    Job Title
-                                </th>
-                                <th>
-                                    Roles
-                                </th>
-                                <th>
-                                    Location
-                                </th>
-                                <th>
-
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (var item in Model)
-                            {
-                            <tr>
-                                <td>
-                                    <a rel="tooltip" title="View Details" href="/items/details/@item.UserName">
-                                        @item.UserName
-                                    </a>
-
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FriendlyName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.JobTitle)
-                                </td>
-                                <td class="text-right">
-                                    @Html.DisplayFor(modelItem => item.Roles)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Roles)
-                                </td>
-                                <td class="td-actions text-right">
-                                    <a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/items/edit/@item.UserName">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-
-                                    <a rel="tooltip" title="Delete Record" class="btn btn-danger btn-link btn-sm" href="/items/delete/@item.UserName">
-                                        <i class="material-icons">close</i>
-                                    </a>
-
-                                </td>
-                            </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Pick a password", "SetPassword")
+            }
+        </p>
+        <p>
+            Phone Number: @(Model.PhoneNumber ?? "None") [
+            @if (Model.PhoneNumber != null)
+            {
+                @Html.ActionLink("Change", "AddPhoneNumber")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Remove", "RemovePhoneNumber")
+            }
+            else
+            {
+                @Html.ActionLink("Add", "AddPhoneNumber")
+            }
+            ]
+        </p>
+        <p>
+            External Logins: @Model.Logins.Count
+            @Html.ActionLink("[Manage]", "ManageLogins")
+        </p>
+        @if (Model.TwoFactor)
+        {
+            <form method="post" action="/Manage/DisableTFA">
+                <p>
+                    Two factor is currently enabled:
+                    <input type="submit" value="Disable" class="btn btn-default" />
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/EnableTFA">
+                <p>
+                    Two factor is currently disabled:
+                    <input type="submit" value="Enable" class="btn btn-default" />
+                </p>
+            </form>
+        }
+        @if (Model.BrowserRemembered)
+        {
+            <form method="post" action="/Manage/ForgetBrowser">
+                <p>
+                    Browser is curently remembered for two factor:
+                    <input type="submit" value="Forget Browser" class="btn btn-default" />
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/RememberBrowser">
+                <p>
+                    Browser is curently not remembered for two factor:
+                    <input type="submit" value="Remember Browser" class="btn btn-default" />
+                </p>
+            </form>
+        }
     </div>
 </div>
