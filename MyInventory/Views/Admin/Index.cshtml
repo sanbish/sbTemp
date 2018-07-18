@@ -49,9 +49,9 @@
                                 <th>
                                     Job Title
                                 </th>
-                                <th>
+                                @*<th>
                                     Roles
-                                </th>
+                                </th>*@
                                 <th>
                                     Location
                                 </th>
@@ -80,15 +80,15 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.JobTitle)
                                     </td>
-                                    <td class="text-right">
+                                    @*<td class="text-right">
                                         @foreach (var role in item.Roles)
                                         {
                                             Html.Display(role.RoleId.ToString() + ",");
                                         }
                                         @Html.DisplayFor(modelItem => item.Roles)
-                                    </td>
+                                    </td>*@
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Roles)
+                                        @Html.DisplayFor(modelItem => item.LocationId)
                                     </td>
                                     <td class="td-actions text-right">
                                         <a rel="tooltip" title="Edit Details" class="btn btn-primary btn-link btn-sm" href="/admin/edit/@item.Id">

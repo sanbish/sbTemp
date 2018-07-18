@@ -16,6 +16,7 @@ namespace MyInventory.Controllers
     //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+       private InvDBContext db = new InvDBContext();
 
         public AdminController()
         {
@@ -55,7 +56,7 @@ namespace MyInventory.Controllers
         //
         // GET: /Users/
         public async Task<ActionResult> Index()
-        {
+        {           
             return View(await UserManager.Users.ToListAsync());
         }
 
@@ -80,6 +81,7 @@ namespace MyInventory.Controllers
         {
             //Get the list of Roles
             ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
+            ViewBag.LocationId = new SelectList(db.Locations, "Loc_ID", "Location1");
             return View();
         }
 
@@ -90,7 +92,17 @@ namespace MyInventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };                
+                var user = new ApplicationUser
+                {
+                    UserName = userViewModel.UserName,
+                    Email = userViewModel.Email,
+                    FirstName = userViewModel.FirstName,
+                    MiddleName = userViewModel.MiddleName,
+                    LastName = userViewModel.LastName,
+                    PhoneNumber = userViewModel.PhoneNumber,
+                    JobTitle = userViewModel.JobTitle,
+                    LocationId = userViewModel.LocationId,
+                };               
                 // Then create:
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
@@ -135,19 +147,28 @@ namespace MyInventory.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+
             var userRoles = await UserManager.GetRolesAsync(user.Id);
+
+            ViewBag.LocationId = db.Locations.ToList().Select(x => new SelectListItem()
+            {
+                Selected =(x.Loc_ID==user.LocationId),
+                Text = x.Location1,
+                Value = x.Loc_ID.ToString()
+            });
 
             return View(new EditUserViewModel()
             {
                 Id = user.Id,
                 Email = user.Email,
-                
+                UserName=user.UserName,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 JobTitle = user.JobTitle,
-               // LocationId = user.LocationId,
+                LocationId = user.LocationId,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -161,7 +182,7 @@ namespace MyInventory.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,Address,City,State,PostalCode")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,UserName,FirstName,MiddleName,LastName,PhoneNumber,JobTitle,LocationId")] EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -171,15 +192,15 @@ namespace MyInventory.Controllers
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
+                user.UserName = editUser.UserName;
                 user.Email = editUser.Email;
 
-                user.FirstName = user.FirstName;
-                user.MiddleName = user.MiddleName;
-                user.LastName = user.LastName;
-                user.PhoneNumber = user.PhoneNumber;
-                user.JobTitle = user.JobTitle;
-                //user.LocationId = user.LocationId;
+                user.FirstName = editUser.FirstName;
+                user.MiddleName = editUser.MiddleName;
+                user.LastName = editUser.LastName;
+                user.PhoneNumber = editUser.PhoneNumber;
+                user.JobTitle = editUser.JobTitle;
+                user.LocationId = editUser.LocationId;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 

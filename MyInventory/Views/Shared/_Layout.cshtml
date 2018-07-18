@@ -106,7 +106,7 @@
                     <li class="@cls">
                         <a class="nav-link" href="/stock">
                             <i class="material-icons">line_weight</i>
-                            <p>Manage Stock</p>
+                            <p>Stock</p>
                         </a>
                     </li>
                     @if (Route.Contains("/po".ToLower()) == true)
@@ -148,7 +148,7 @@
                     <li class="@cls">
                         <a class="nav-link" href="/admin">
                             <i class="material-icons">person</i>
-                            <p>Manage</p>
+                            <p>Users</p>
                         </a>
                     </li>
                     @*@if (Url.RouteUrl(ViewContext.RouteData.Values) == "/home/about")
@@ -227,9 +227,14 @@
                         <div class="card-body">
                             <h4 class="card-category text-gray">@User.Identity.GetUserFriendlyName()</h4>
                             <h6 class="card-title">@User.Identity.GetUserJobTitle()</h6>
+                            @*<p> <a href="/Manage" rel="tooltip" title="Manage your Account">Manage Account</a></p>*@
                             <p> <a href="/Manage/ChangePassword" rel="tooltip" title="Change your password">Change Password</a></p>
-                            <p> <a href="/account/LogOff" rel="tooltip" class="btn btn-primary btn-round" title="Sign out from the system">Sign Out</a></p>
 
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+                        @Html.AntiForgeryToken()
+                        <p> <a href="javascript:document.getElementById('logoutForm').submit()" rel="tooltip" class="btn btn-primary btn-round" title="Sign out from the system">Sign Out</a></p>
+}
                         </div>
 }
                                 </div>

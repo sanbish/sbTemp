@@ -6,13 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MyInventory.Data;
+using MyInventory.Models;
 
 namespace MyInventory.Controllers
 {
     public class NotificationsController : Controller
     {
-        private InvContext db = new InvContext();
+        private InvDBContext db = new InvDBContext();
 
         // GET: Notifications
         public ActionResult Index()

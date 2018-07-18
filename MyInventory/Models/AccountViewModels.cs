@@ -50,9 +50,8 @@ namespace MyInventory.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,6 +64,11 @@ namespace MyInventory.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -106,6 +110,10 @@ namespace MyInventory.Models
         public string Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
@@ -125,7 +133,7 @@ namespace MyInventory.Models
         public string PhoneNumber { get; set; }
 
         public int LocationId { get; set; }
-
+        public IEnumerable<SelectListItem> LocationList { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }

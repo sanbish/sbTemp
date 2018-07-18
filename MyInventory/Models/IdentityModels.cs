@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MyInventory.Models;
 
 namespace MyInventory.Models
 {
@@ -33,6 +36,7 @@ namespace MyInventory.Models
         //public string Configuration { get; set; }
 
         public bool IsActive { get; set; }
+        public int LocationId { get; set; }
         public string Photo { get; set; }
 
         

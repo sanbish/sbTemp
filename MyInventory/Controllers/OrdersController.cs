@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
-using MyInventory.Data;
+using MyInventory.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +12,7 @@ namespace MyInventory.Controllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private InvContext db = new InvContext();
+        private InvDBContext db = new InvDBContext();
 
         // GET: Orders
         public ActionResult Index()
