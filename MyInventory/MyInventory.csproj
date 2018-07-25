@@ -55,27 +55,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.7.0-beta2\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.7.0-beta2\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.7.0-beta2\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.Web, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.7.0-beta2\lib\net45\Microsoft.AI.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.WindowsServer, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.7.0-beta2\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationInsights, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.7.0-beta2\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -232,6 +211,7 @@
     <Compile Include="Models\Order_Master.cs" />
     <Compile Include="Models\PO_Detail.cs" />
     <Compile Include="Models\PO_Header.cs" />
+    <Compile Include="Models\PO_Receive.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UOM.cs" />
@@ -240,68 +220,75 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\demo.css" />
+    <Content Include="assets\css\font-awesome.css" />
+    <Content Include="assets\css\font-awesome.min.css" />
+    <Content Include="assets\css\google-roboto-300-700.css" />
     <Content Include="assets\css\material-dashboard.css" />
-    <Content Include="assets\css\material-dashboard.min.css" />
-    <Content Include="assets\demo\demo.css" />
-    <Content Include="assets\demo\demo.js" />
+    <Content Include="assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\img\apple-icon.png" />
-    <Content Include="assets\img\cover.jpg" />
+    <Content Include="assets\img\bg-pricing.jpg" />
+    <Content Include="assets\img\card-1.jpg" />
+    <Content Include="assets\img\card-2.jpg" />
+    <Content Include="assets\img\card-3.jpg" />
+    <Content Include="assets\img\default-avatar.png" />
+    <Content Include="assets\img\faces\avatar.jpg" />
+    <Content Include="assets\img\faces\card-profile1-square.jpg" />
+    <Content Include="assets\img\faces\marc.jpg" />
     <Content Include="assets\img\favicon.png" />
-    <Content Include="assets\img\logo.png" />
-    <Content Include="assets\img\mask.png" />
-    <Content Include="assets\img\new_logo.png" />
+    <Content Include="assets\img\flags\AU.png" />
+    <Content Include="assets\img\flags\BR.png" />
+    <Content Include="assets\img\flags\DE.png" />
+    <Content Include="assets\img\flags\GB.png" />
+    <Content Include="assets\img\flags\RO.png" />
+    <Content Include="assets\img\flags\US.png" />
+    <Content Include="assets\img\image_placeholder.jpg" />
+    <Content Include="assets\img\lock.jpg" />
+    <Content Include="assets\img\login.jpg" />
+    <Content Include="assets\img\placeholder.jpg" />
+    <Content Include="assets\img\product1.jpg" />
+    <Content Include="assets\img\product2.jpg" />
+    <Content Include="assets\img\product3.jpg" />
     <Content Include="assets\img\products\avatar.jpg" />
     <Content Include="assets\img\products\card-profile1-square.jpg" />
     <Content Include="assets\img\products\card-profile2-square.jpg" />
+    <Content Include="assets\img\products\cipipe.jpg" />
+    <Content Include="assets\img\products\Door.jpg" />
+    <Content Include="assets\img\products\elbow.jpg" />
     <Content Include="assets\img\products\marc.jpg" />
+    <Content Include="assets\img\products\noImage.jpg" />
+    <Content Include="assets\img\products\window.jpg" />
+    <Content Include="assets\img\P_20160914_112545_BF.jpg" />
+    <Content Include="assets\img\register.jpg" />
     <Content Include="assets\img\sidebar-1.jpg" />
     <Content Include="assets\img\sidebar-2.jpg" />
     <Content Include="assets\img\sidebar-3.jpg" />
     <Content Include="assets\img\sidebar-4.jpg" />
-    <Content Include="assets\js\core\bootstrap-material-design.min.js" />
-    <Content Include="assets\js\core\jquery.min.js" />
-    <Content Include="assets\js\core\popper.min.js" />
+    <Content Include="assets\js\bootstrap-datetimepicker.js" />
+    <Content Include="assets\js\bootstrap-notify.js" />
+    <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\chartist.min.js" />
+    <Content Include="assets\js\demo.js" />
+    <Content Include="assets\js\fullcalendar.min.js" />
+    <Content Include="assets\js\google-maps-api.js" />
+    <Content Include="assets\js\jasny-bootstrap.min.js" />
+    <Content Include="assets\js\jquery-3.1.1.min.js" />
+    <Content Include="assets\js\jquery-jvectormap.js" />
+    <Content Include="assets\js\jquery-ui.min.js" />
+    <Content Include="assets\js\jquery.bootstrap-wizard.js" />
+    <Content Include="assets\js\jquery.datatables.js" />
+    <Content Include="assets\js\jquery.select-bootstrap.js" />
+    <Content Include="assets\js\jquery.sharrre.js" />
+    <Content Include="assets\js\jquery.tagsinput.js" />
+    <Content Include="assets\js\jquery.validate.min.js" />
     <Content Include="assets\js\material-dashboard.js" />
-    <Content Include="assets\js\material-dashboard.min.js" />
-    <Content Include="assets\js\plugins\bootstrap-notify.js" />
-    <Content Include="assets\js\plugins\chartist.min.js" />
-    <Content Include="assets\js\plugins\perfect-scrollbar.jquery.min.js" />
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="assets\css\material-dashboard.css.map" />
-    <Content Include="assets\js\material-dashboard.js.map" />
+    <Content Include="assets\js\material.min.js" />
+    <Content Include="assets\js\moment.min.js" />
+    <Content Include="assets\js\nouislider.min.js" />
+    <Content Include="assets\js\perfect-scrollbar.jquery.min.js" />
+    <Content Include="assets\js\sweetalert2.js" />
     <Content Include="assets\scss\material-dashboard.scss" />
     <Content Include="assets\scss\material-dashboard\bootstrap\scss\bootstrap-grid.scss" />
     <Content Include="assets\scss\material-dashboard\bootstrap\scss\bootstrap-reboot.scss" />
@@ -465,30 +452,50 @@
     <Content Include="assets\scss\material-dashboard\_tooltip.scss" />
     <Content Include="assets\scss\material-dashboard\_type.scss" />
     <Content Include="assets\scss\material-dashboard\_variables.scss" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\index.d.ts" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\fonts\FontAwesome.otf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="assets\fonts\google\-2n2p-_Y08sg57CNWQfKNvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\-L14Jk06m6pUHB-5mXQQnRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\0eC6fl06luXEYWpBSJvXCBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2" />
+    <Content Include="assets\fonts\google\77FXFjRbGzN4aCrSFhlh3hJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\97uahxiqZRoncBaCEI3aWxJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\CWB0XYA8bzo0kSThX0UTuA.woff2" />
+    <Content Include="assets\fonts\google\d-6IYplOFocCacKzxwXSOFtXRa8TVwTICgirnJhmVJw.woff2" />
+    <Content Include="assets\fonts\google\ek4gzZ-GeXAPcSbHtCeQI_esZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\Fcx7Wwv8OzT71A3E1XOAjvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\Fl4y0QdOxyyTHEGMXX8kcRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\Hgo13k-tfSpn0qi1SFdUfVtXRa8TVwTICgirnJhmVJw.woff2" />
+    <Content Include="assets\fonts\google\I3S1wsgSg9YCurV6PUkTORJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\isZ-wbCXNKAbnjo6_TwHThJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\jSN2CGVDbcVyCnfJfjSdfBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\mbmhprMH69Zi6eEPBYVFhRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\mErvLBYg_cXG3rLvUsKT_fesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\mx9Uck6uB63VIKFYnEMXrRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\NdF9MtnOpLzo-noMoG0miPesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\NYDWBdD4gIq26G5XYbHsFBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\oHi30kwQWvpCWqAhzHcCSBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\oOeFwZNlrTefzLYmlVV1UBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\Pru33qjShpZSmG3z6VYwnRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\PwZc-YbIL414wB9rB1IAPRJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\rGvHdJnr2l75qb0YND9NyBJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\RxZJdnzeo3R5zSexge8UUVtXRa8TVwTICgirnJhmVJw.woff2" />
+    <Content Include="assets\fonts\google\u0TOpm082MNkS5K0Q4rhqvesZW2xOQ-xsNqO47m55DA.woff2" />
+    <Content Include="assets\fonts\google\UX6i4JxQDm3fVTc1CPuwqhJtnKITppOI_IvcXXDNrsc.woff2" />
+    <Content Include="assets\fonts\google\ZLqKeelYbATG60EpZBSDyxJtnKITppOI_IvcXXDNrsc.woff2" />
+    <None Include="Properties\PublishProfiles\sanbish - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -524,15 +531,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
     <Content Include="Views\Items\Details.cshtml" />
@@ -578,8 +576,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

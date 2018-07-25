@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using MyInventory.Models;
+using System.IO;
 
 namespace MyInventory.Controllers
 {
     //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-       private InvDBContext db = new InvDBContext();
+        private const string FolderPath = "/assets/img/Uploads/";
+        private InvDBContext db = new InvDBContext();
 
         public AdminController()
         {
@@ -88,7 +90,7 @@ namespace MyInventory.Controllers
         //
         // POST: /Users/Create
         [HttpPost]
-        public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
+        public async Task<ActionResult> Create(RegisterViewModel userViewModel, HttpPostedFileBase file, params string[] selectedRoles)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +104,23 @@ namespace MyInventory.Controllers
                     PhoneNumber = userViewModel.PhoneNumber,
                     JobTitle = userViewModel.JobTitle,
                     LocationId = userViewModel.LocationId,
-                };               
+                    Photo = "/Content/img/avatar.jpg",
+                };
+
+                if (file != null)
+                {
+                    file.InputStream.Read(new byte[file.ContentLength], 0, file.ContentLength);
+                    var filename = "User_" + DateTime.Now.Ticks.ToString() + ".jpg";
+                    if (!string.IsNullOrEmpty(userViewModel.Photo))
+                    {
+                        filename = userViewModel.Photo;
+                    }
+                    var filePath = Server.MapPath(path: FolderPath);
+
+                    string savedFileName = Path.Combine(filePath, filename);
+                    file.SaveAs(savedFileName);
+                    user.Photo = savedFileName;
+                }
                 // Then create:
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
@@ -147,7 +165,7 @@ namespace MyInventory.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
+            
 
             var userRoles = await UserManager.GetRolesAsync(user.Id);
 
@@ -156,6 +174,13 @@ namespace MyInventory.Controllers
                 Selected =(x.Loc_ID==user.LocationId),
                 Text = x.Location1,
                 Value = x.Loc_ID.ToString()
+            });
+
+            ViewBag.RoleId = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+            {
+                Selected = userRoles.Contains(x.Name),
+                Text = x.Name,
+                Value = x.Name
             });
 
             return View(new EditUserViewModel()
@@ -169,12 +194,7 @@ namespace MyInventory.Controllers
                 PhoneNumber = user.PhoneNumber,
                 JobTitle = user.JobTitle,
                 LocationId = user.LocationId,
-                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
-                {
-                    Selected = userRoles.Contains(x.Name),
-                    Text = x.Name,
-                    Value = x.Name
-                })
+                Photo=user.Photo
             });
         }
 
@@ -182,14 +202,31 @@ namespace MyInventory.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,UserName,FirstName,MiddleName,LastName,PhoneNumber,JobTitle,LocationId")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,UserName,FirstName,MiddleName,LastName,PhoneNumber,JobTitle,LocationId")] EditUserViewModel editUser, HttpPostedFileBase file, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByIdAsync(editUser.Id);
+                user.Photo = "/Content/img/avatar.jpg";
+
                 if (user == null)
                 {
                     return HttpNotFound();
+                }
+
+                if (file != null)
+                {
+                    file.InputStream.Read(new byte[file.ContentLength], 0, file.ContentLength);
+                    var filename = "User_" + DateTime.Now.Ticks.ToString() + ".jpg";
+                    if (!string.IsNullOrEmpty(editUser.Photo))
+                    {
+                        filename = editUser.Photo;
+                    }
+                    var filePath = Server.MapPath("/Content/img/");
+
+                    string savedFileName = Path.Combine(filePath, filename);
+                    file.SaveAs(savedFileName);
+                    user.Photo = "/Content/img/" + filename;
                 }
 
                 user.UserName = editUser.UserName;

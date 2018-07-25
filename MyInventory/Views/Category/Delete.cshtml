@@ -5,19 +5,17 @@
 }
 
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-sm-6 col-sm-offset-3">
         <div class="card">
-            <div class="card-header card-header-danger">
-                <h4 class="card-title">Delete Category</h4>
-                <p class="card-category"> Are you sure you want to delete this category?</p>
-
+            <div class="card-header card-header-icon" data-background-color="purple">
+                <i class="material-icons">class</i>
             </div>
-            <div class="card-body">
-
+            <div class="card-content">
+                <h4 class="card-title">Delete Category</h4>
+                <p class="card-category text-danger"> Are you sure you want to delete this category?</p>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         @Html.HiddenFor(model => model.Category_ID)
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -43,28 +41,21 @@
                                 </div>
                             </div>
                         </div>
-                        <ul class="nav">
-                            <li class="nav-item active">
-                                <a class="btn btn-primary" href="/category">
-                                    <i class="material-icons">keyboard_backspace</i>
-                                    Back to List
-                                </a>
-                            </li>
-                            <li class="nav-item active">
-
-                                @using (Html.BeginForm())
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-danger pull-right"> <i class="material-icons">close</i>Delete</button>
-                                }
-                                <div class="clearfix"></div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-4">
-                        <br /><br />
-                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @using (Html.BeginForm())
+    {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger pull-left"> <i class="material-icons">close</i>Delete</button>
+}
+                                    <a class="btn btn-primary pull-right" href="/category">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace MyInventory.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        private InvDBContext db = new InvDBContext();
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -19,6 +22,7 @@ namespace MyInventory.Models
             return userIdentity;
         }
 
+        [NotMapped]
         public virtual string FriendlyName
         {
             get
@@ -26,6 +30,16 @@ namespace MyInventory.Models
                 string friendlyName = string.IsNullOrWhiteSpace(FirstName + " " + LastName) ? UserName : FirstName + " " + LastName;
                 
                 return friendlyName;
+            }
+        }
+        [NotMapped]
+        public virtual string LocationName
+        {
+            get
+            {
+                string locationName = db.Locations.Find(LocationId).Location1;
+
+                return locationName;
             }
         }
 

@@ -4,120 +4,156 @@
 }
 
 
-@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-sm-12 ">
             <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Edit user information.</h4>
+                <div class="card-header card-header-icon" data-background-color="purple">
+                    <i class="material-icons">person</i>
                 </div>
-                <div class="card-body">
+                <div class="card-content">
+                    <h4 class="card-title">Edit user information.</h4>
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-8">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">User Name</label>
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Username</label>
                                         @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">E Mail(User Name)</label>
+                                <div class="col-md-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">E Mail</label>
                                         @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
+                            </div>                  
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Location</label>
-                                        @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.LocationId, "", new { @class = "text-danger" })
+                                <div class="col-md-4">
+                                    <div class="form-group  label-floating">
+                                        <label class="control-label">Phone</label>
+                                        @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        @Html.Label("Roles", new { @class = "bmd-label-floating" })
+                                <div class="col-md-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
                                     </div>
                                 </div>
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        @foreach (var item in Model.RolesList)
-                {
-                        <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" style="margin-left:20px;" />
-                        @Html.Label(item.Value, new { @class = "bmd-label-floating" })
-}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Job Title</label>
+                                <div class="col-md-6">
+                                    <div class="form-group  label-floating">
+                                        <label class="control-label">Job Title</label>
                                         @Html.EditorFor(m => m.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.JobTitle, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Phone</label>
-                                        @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">First Name</label>
+                                    <div class="form-group  label-floating">
+                                        <label class="control-label">First Name</label>
                                         @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Middle Name</label>
+                                <div class="col-md-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group  label-floating">
+                                        <label class="control-label">Middle Name</label>
                                         @Html.EditorFor(m => m.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.MiddleName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Last Name</label>
+                                    <div class="form-group  label-floating">
+                                        <label class="control-label">Last Name</label>
                                         @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <ul class="nav">
-                                        <li class="nav-item active">
-                                            <a class="btn btn-primary" href="/admin">
-                                                <i class="material-icons">keyboard_backspace</i>
-                                                Back to List
-                                            </a>
-                                        </li>
-                                        <li class="nav-item active">
-                                            <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
-                                            <div class="clearfix"></div>
-                                        </li>
-                                    </ul>
+                                <div class="col-md-11">
+
+                                    <button type="submit" class="btn btn-primary pull-left"> <i class="material-icons">done</i>Save</button>
+                                    <a class="btn btn-primary pull-right" href="/admin">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail img-circle">                                   
+
+                                    @if (!String.IsNullOrEmpty(Model.Photo))
+                                    {
+                                        <img src="@Model.Photo" alt="..." />
+
+                                    }
+                                    else
+                                    {
+                                        <img src="../../assets/img/placeholder.jpg" alt="...">
+                                    }
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                                <div>
+                                    <span class="btn btn-primary btn-round btn-file">
+                                        <span class="fileinput-new">Select Photo</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="file" id="file" />
+                                    </span>
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+
+                                    @Html.Label("Roles", new { @class = "col-md-2 label-on-left" })
+                                    <div class="col-md-10">
+                                        <select class="selectpicker" name="SelectedRole" data-style="select-with-transition" multiple title="Choose User Roles" data-size="7">
+                                            <option disabled> Choose User Roles</option>
+
+                                            @foreach (var item in ViewBag.RoleId)
+                                            {
+                                                <option value="@item.Value" selected="@item.Selected"> @item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+
+                                    @Html.Label("Location", new { @class = "col-md-2 label-on-left" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.LocationId, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,11 +162,18 @@
             </div>
         </div>
     </div>
-
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    function previewImage(event) {
+        // Get a reference to the image element
+        var image = document.querySelector("#ImageFile");
+        // Set its source to the file in the <input type=file element
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyInventory.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,12 @@ namespace MyInventory
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             
+        }
+        protected void Session_Start()
+        {
+            InvDBContext db = new InvDBContext();
+
+            Session["Locations"] = db.Locations.ToList();
         }
     }
 }

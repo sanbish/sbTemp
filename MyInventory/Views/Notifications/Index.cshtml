@@ -8,17 +8,17 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header card-header-tabs card-header-primary">
-                <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                        <span class="nav-tabs-title"><b>Notifications for @User.Identity.Name</b></span>                        
-                    </div>
-                </div>
+            <div class="card-header card-header-icon" data-background-color="purple">
+                <i class="material-icons">notifications</i>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
+            <div class="card-content">
+                <h4 class="card-title">Notifications for @User.Identity.Name</h4>
+                @*<div class="toolbar">
+
+        </div>*@
+                <div class="material-datatables">
+                    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead class="text-rose text-dark">
                             <tr>
                                 <th>
                                     ID
@@ -37,37 +37,56 @@
                                 </th>
                             </tr>
                         </thead>
+                        <tfoot class="text-rose text-dark">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Notification For
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Read?
+                                </th>
+                            </tr>
+                        </tfoot>
                         <tbody>
 
                             @foreach (var item in Model)
-                            {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Notification_ID)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Notification_To)
-                                </td>
-                                <td>
-                                    <a rel="tooltip" title="View Details" href="/Notifications/details/@item.Notification_ID">
-                                        @item.Notification1
-                                    </a>
-                                   
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Notification_Type)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Is_Read)
-                                </td>
-                            </tr>
-                            }
+        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notification_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notification_To)
+                        </td>
+                        <td>
+                            <a rel="tooltip" title="View Details" href="/Notifications/details/@item.Notification_ID">
+                                @item.Notification1
+                            </a>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notification_Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Is_Read)
+                        </td>
+                    </tr>
+}
                         </tbody>
                     </table>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
 </div>
 
 

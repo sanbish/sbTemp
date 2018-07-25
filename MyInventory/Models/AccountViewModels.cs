@@ -94,6 +94,9 @@ namespace MyInventory.Models
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 
+        [Display(Name = "User Photo")]
+        public string Photo { get; set; }
+
         [Required]
         [Phone]
         [Display(Name = "Phone number")]
@@ -126,6 +129,9 @@ namespace MyInventory.Models
         public string LastName { get; set; }
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
+
+        [Display(Name = "User Photo")]
+        public string Photo { get; set; }
 
         [Required]
         [Phone]

@@ -12,17 +12,18 @@
     @Html.AntiForgeryToken()
 
     <div class="row">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Edit Category</h4>
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="card ">
+                <div class="card-header card-header-icon" data-background-color="purple">
+                    <i class="material-icons">class</i>
                 </div>
-                <div class="card-body">
-
+                <div class="card-content">
+                    <h4 class="card-title">Edit Category</h4>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                             @Html.HiddenFor(model => model.Category_ID)
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -43,43 +44,34 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.EditorFor(model => model.Aprroval_Needed)
+                                            @Html.ValidationMessageFor(model => model.Aprroval_Needed, "", new { @class = "text-danger" })
+                                            2nd Aprroval Needed?
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Aprroval Needed?</label>
-                                        @Html.EditorFor(model => model.Aprroval_Needed)
-                                        @Html.ValidationMessageFor(model => model.Aprroval_Needed, "", new { @class = "text-danger" })
+                                        <button type="submit" class="btn btn-primary pull-left"> <i class="material-icons">done</i>Save</button>
+                                        <a class="btn btn-primary pull-right" href="/category">
+                                            <i class="material-icons">keyboard_backspace</i>
+                                            Back to List
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <ul class="nav">
-                                <li class="nav-item active">
-                                    <a class="btn btn-primary" href="/category">
-                                        <i class="material-icons">keyboard_backspace</i>
-                                        Back to List
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
-                                    <div class="clearfix"></div>
-                                </li>
-                            </ul>
                         </div>
 
-                        <div class="col-md-4">
-                            <br /><br />
-                            @*<div class="card card-profile">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Product Image</h4>
-                                        <img class="img" src="~/assets/img/products/noImage.jpg" style="width:250px;height:auto;" />
-                                        <a href="#pablo" class="btn btn-primary btn-round">Change Image</a>
-                                    </div>
-                                </div>*@
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
+        </div>
 }
 
 

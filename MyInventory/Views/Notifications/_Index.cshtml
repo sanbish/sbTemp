@@ -3,14 +3,15 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header card-header-warning">
+            <div class="card-header card-header-icon" data-background-color="purple">
+                <i class="material-icons">assignment</i>
+            </div>
                 <h4 class="card-title">Notifications for @User.Identity.Name</h4>
                 <p class="card-category">As on @DateTime.Now.ToString("dd, mmm yyyy")</p>
-            </div>
-            <div class="card-body">
+            <div class="card-content">
                 <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class=" text-warning">
+                    <table class="table table-striped">
+                        <thead class="text-rose text-dark">
                             <tr>
                                 <th>
                                     ID
@@ -31,29 +32,30 @@
                         </thead>
                         <tbody>
 
-                            @foreach (var item in Model.Where(n=>n.Is_Read==false).Take(3))
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Notification_ID)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Notification_To)
-                                    </td>
-                                    <td>
-                                        <a rel="tooltip" title="View Details" href="/Notifications/details/@item.Notification_ID">
-                                            @item.Notification1
-                                        </a>
+                            @*@foreach (var item in Model.Where(n => n.Is_Read == false).Take(3))*@
+                        @foreach (var item in Model.Take(4))
+{
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Notification_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Notification_To)
+                            </td>
+                            <td>
+                                <a rel="tooltip" title="View Details" href="/Notifications/details/@item.Notification_ID">
+                                    @item.Notification1
+                                </a>
 
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Notification_Type)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Is_Read)
-                                    </td>
-                                </tr>
-                            }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Notification_Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Is_Read)
+                            </td>
+                        </tr>
+}
                         </tbody>
                     </table>
                 </div>

@@ -7,7 +7,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
@@ -15,75 +15,80 @@
     <div class="row">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Add New Product</h4>
+                <div class="card-header card-header-icon" data-background-color="purple">
+                    <i class="material-icons">apps</i>
                 </div>
-                <div class="card-body">
-
+                <div class="card-content">
+                    <h4 class="card-title">Add New Product</h4>
                     <div class="row">
                         <div class="col-md-8">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Product Name</label>
-                                            @Html.EditorFor(model => model.Item_Name, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "text-danger" })
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Product Name</label>
+                                        @Html.EditorFor(model => model.Item_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Description</label>
-                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">                                        
+                                        <div class="form-group  label-floating">
+                                            <label class="control-label">Description</label>
+                                            
+                                            @Html.TextAreaFor(model => model.Description, rows: 5,columns:50, htmlAttributes: new { @class = "form-control"  })
                                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Unit of Measure</label>
-                                            @Html.DropDownList("Unit", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Unit of Measure</label>
+                                        @Html.DropDownList("Unit", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Category</label>
-                                            @Html.DropDownList("Cat_ID", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Cat_ID, "", new { @class = "text-danger" })
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Category</label>
+                                        @Html.DropDownList("Cat_ID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Cat_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <ul class="nav">
-                                    <li class="nav-item active">
-                                        <a class="btn btn-primary" href="/items">
-                                            <i class="material-icons">keyboard_backspace</i>
-                                            Back to List
-                                        </a>
-                                    </li>
-                                    <li class="nav-item active">
-                                        <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
-                                        <div class="clearfix"></div>
-                                    </li>
-                                </ul>
-                        </div>
-
-                        <div class="col-md-4">
-                            <br /><br />
-                            <div class="card card-profile">
-                                <div class="card-body">
-                                    <h4 class="card-title">Product Image</h4>
-                                    <img class="img" src="~/assets/img/products/noImage.jpg" style="width:250px;height:auto;" />
-                                    <a href="#pablo" class="btn btn-primary btn-round">Change Image</a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-primary pull-left"> <i class="material-icons">done</i>Save</button>
+                                    <a class="btn btn-primary pull-right" href="/items">
+                                        <i class="material-icons">keyboard_backspace</i>
+                                        Back to List
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+    <div class="col-md-4">
+        <h6>Product Image</h6>
+        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+            <div class="fileinput-new thumbnail">
+                <img src="../../assets/img/image_placeholder.jpg" alt="...">
+            </div>
+            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <div>
+                <span class="btn btn-primary btn-round btn-file">
+                    <span class="fileinput-new">Select image</span>
+                    <span class="fileinput-exists">Change</span>
+                    <input type="file" name="file" id="file" />
+                </span>
+                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -95,3 +100,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
