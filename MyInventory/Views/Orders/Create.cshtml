@@ -2,7 +2,7 @@
 @using MyInventory.Models
 
 @{
-    ViewBag.Title = "Checkout Product Items";
+    ViewBag.Title = "Manage Orders";
 }
 
 @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { id = "form1" }))
@@ -12,15 +12,16 @@
 
     <div class="row">
         <div class="col-md-10">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Checkout Product(s)</h4>
+            <div class="card ">
+                <div class="card-header card-header-icon" data-background-color="purple">
+                    <i class="material-icons">shopping_cart</i>
                 </div>
-                <div class="card-body">
+                <div class="card-content">
+                    <h4 class="card-title">Create new Order</h4>
 
                     <div class="row">
-                        <div class="col-md-11">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -30,8 +31,6 @@
                                         @Html.ValidationMessageFor(model => model.Order_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">User</label>
@@ -40,9 +39,16 @@
                                         @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Create Date</label>
+                                        @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control datepicker", @readonly = "readonly", @Value = DateTime.Now.ToShortDateString() } })
+                                        @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Comments</label>
                                         @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
@@ -50,25 +56,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="bmd-label-floating">Create Date</label>
-                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = DateTime.Now.ToShortDateString() } })
-                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="card">
-                                                <div class="card-header card-header-warning ">
-                                                    <h5 class="card-title">Line Items</h5>
+                                                <div class="card-header " data-background-color="rose">
+                                                   <h6 class="card-title" style="padding:0px">Line Items</h6>
                                                 </div>
-                                                <div class="card-body">
+                                                <div class="card-content">
+                                                   
                                                     <div class="row">
                                                         <div class="col-md-11" id="details">
                                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -101,16 +99,16 @@
                                                             </div>
 
                                                             @*@foreach (var OrderDetails in Model.Order_Details)
-                                        {
-                                            Html.RenderPartial("OrderDetails", OrderDetails);
-                                        }*@
+                    {
+                        Html.RenderPartial("OrderDetails", OrderDetails);
+                    }*@
                                                             @{Html.RenderAction("OrderDetails");}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="stats">
-                                                        <input type="button" class="btn btn-warning " value="Add new row" id="Add" />
+                                                        <input type="button" class="btn btn-rose " value="Add new row" id="Add" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,24 +118,22 @@
 
                             </div>
 
-
-
-                            <ul class="nav">
-                                <li class="nav-item active">
-                                    <a class="btn btn-primary" href="/orders">
-                                        <i class="material-icons">keyboard_backspace</i>
-                                        Back to List
-                                    </a>
-                                </li>
-                                <li class="nav-item active">
-                                    <button type="submit" class="btn btn-primary pull-right"> <i class="material-icons">done</i>Save</button>
-                                    <div class="clearfix"></div>
-                                </li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary pull-left"> <i class="material-icons">done</i>Save</button>
+                                        <a class="btn btn-primary pull-right" href="/orders">
+                                            <i class="material-icons">keyboard_backspace</i>
+                                            Back to List
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        
         </div>
     </div>
 
